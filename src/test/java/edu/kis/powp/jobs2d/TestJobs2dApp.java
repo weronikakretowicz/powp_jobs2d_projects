@@ -70,12 +70,12 @@ public class TestJobs2dApp {
 
     private static void setupWindows(Application application) {
 
-        CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager());
+        CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getCommandManager());
         application.addWindowComponent("Command Manager", commandManager);
 
         CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
                 commandManager);
-        CommandsFeature.getDriverCommandManager().getChangePublisher().addSubscriber(windowObserver);
+        CommandsFeature.getCommandManager().getChangePublisher().addSubscriber(windowObserver);
     }
 
     /**

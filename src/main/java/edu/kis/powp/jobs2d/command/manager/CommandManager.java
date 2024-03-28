@@ -9,9 +9,9 @@ import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.observer.Publisher;
 
 /**
- * Driver command Manager.
+ * Command Manager.
  */
-public class DriverCommandManager {
+public class CommandManager {
     private DriverCommand currentCommand = null;
 
     private Publisher changePublisher = new Publisher();

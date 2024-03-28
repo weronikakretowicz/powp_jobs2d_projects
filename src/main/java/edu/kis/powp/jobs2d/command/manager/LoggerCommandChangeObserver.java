@@ -11,7 +11,7 @@ public class LoggerCommandChangeObserver implements Subscriber {
     private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public void update() {
-        DriverCommand command = CommandsFeature.getDriverCommandManager().getCurrentCommand();
+        DriverCommand command = CommandsFeature.getCommandManager().getCurrentCommand();
         logger.info("Current command set to: " + command.toString());
     }
 
