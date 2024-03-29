@@ -9,6 +9,14 @@ public class OperateToCommand implements DriverCommand {
 
 	private int posX, posY;
 
+	public int getPosX() {
+		return posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
 	public OperateToCommand(int posX, int posY) {
 		super();
 		this.posX = posX;
@@ -20,4 +28,8 @@ public class OperateToCommand implements DriverCommand {
 		driver.operateTo(posX, posY);
 	}
 
+	@Override
+	public void accept(CommandCounter commandCounter) {
+		commandCounter.visit(this);
+	}
 }

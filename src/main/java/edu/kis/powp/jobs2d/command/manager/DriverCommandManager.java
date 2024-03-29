@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.command.CommandCounter;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.observer.Publisher;
@@ -40,6 +41,11 @@ public class DriverCommandManager {
 			@Override
 			public void execute(Job2dDriver driver) {
 				driverCommands.forEach((c) -> c.execute(driver));
+			}
+
+			@Override
+			public void accept(CommandCounter commandCounter) {
+				commandCounter.visit(this);
 			}
 
 			@Override

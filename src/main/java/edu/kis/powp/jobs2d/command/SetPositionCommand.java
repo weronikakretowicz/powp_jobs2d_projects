@@ -9,6 +9,14 @@ public class SetPositionCommand implements DriverCommand {
 
 	private int posX, posY;
 
+	public int getPosX() {
+		return posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
 	public SetPositionCommand(int posX, int posY) {
 		super();
 		this.posX = posX;
@@ -20,4 +28,8 @@ public class SetPositionCommand implements DriverCommand {
 		driver.setPosition(posX, posY);
 	}
 
+	@Override
+	public void accept(CommandCounter commandCounter) {
+		commandCounter.visit(this);
+	}
 }
