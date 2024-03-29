@@ -15,7 +15,7 @@ public class VisitorTest {
 		commands.add(new OperateToCommand(50, -50));
 		commands.add(new OperateToCommand(-50, -50));
 
-		CommandCounter commandCounter = new CommandCounter();
+		CommandVisitor commandCounter = new CommandCounter();
 
 		for(DriverCommand command : commands){
 			command.accept(commandCounter);

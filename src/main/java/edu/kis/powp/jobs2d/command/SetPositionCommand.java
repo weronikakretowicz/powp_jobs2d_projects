@@ -29,7 +29,7 @@ public class SetPositionCommand implements DriverCommand {
 	}
 
 	@Override
-	public void accept(CommandCounter commandCounter) {
-		commandCounter.visit(this);
+	public void accept(CommandVisitor commandVisitor) {
+		commandVisitor.visit(this);
 	}
 }
