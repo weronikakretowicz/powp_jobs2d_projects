@@ -56,8 +56,11 @@ public class TestJobs2dApp {
      * @param application Application context.
      */
     private static void setupDrivers(Application application) {
-        Job2dDriver loggerDriver = new LoggerDriver(true);
-        DriverFeature.addDriver("Logger driver", loggerDriver);
+        Job2dDriver loggerDriver = new LoggerDriver(false);
+        DriverFeature.addDriver("Simple Logger driver", loggerDriver);
+
+        Job2dDriver loggerDriver2 = new LoggerDriver(true);
+        DriverFeature.addDriver("Detailed Logger driver", loggerDriver2);
 
         DrawPanelController drawerController = DrawerFeature.getDrawerController();
         Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
