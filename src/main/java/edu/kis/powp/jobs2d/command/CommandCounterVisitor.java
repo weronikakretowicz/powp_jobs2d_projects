@@ -1,6 +1,6 @@
 package edu.kis.powp.jobs2d.command;
 
-public class CommandCounter implements CommandVisitor {
+public class CommandCounterVisitor implements CommandVisitor {
 
 	@Override
 	public void visit(OperateToCommand operateToCommand) {
