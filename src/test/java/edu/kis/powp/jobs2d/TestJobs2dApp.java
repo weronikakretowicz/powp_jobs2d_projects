@@ -40,9 +40,7 @@ public class TestJobs2dApp {
      * @param application Application context.
      */
     private static void setupCommandTests(Application application) {
-        SelectTestFigureCompoundRectangleOptionListener selectTestFigureCompoundRectangleOptionListener =
-                new SelectTestFigureCompoundRectangleOptionListener(DriverFeature.getDriverManager());
-        application.addTest("Compound Rectangle", selectTestFigureCompoundRectangleOptionListener);
+        application.addTest("Load Compound Rectangle command", new SelectLoadCompoundRectangleCommandOptionListener());
 
         application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 

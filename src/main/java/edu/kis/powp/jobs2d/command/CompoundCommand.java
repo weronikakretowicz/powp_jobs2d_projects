@@ -10,6 +10,11 @@ import java.util.logging.Logger;
 public class CompoundCommand implements ICompoundCommand {
     private final List<DriverCommand> commands = new ArrayList<>();
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final String name;
+
+    public CompoundCommand(String name) {
+        this.name = name;
+    }
 
     public void addCommand(DriverCommand command) {
         commands.add(command);
@@ -43,5 +48,10 @@ public class CompoundCommand implements ICompoundCommand {
     @Override
     public Iterator<DriverCommand> iterator() {
         return commands.iterator();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

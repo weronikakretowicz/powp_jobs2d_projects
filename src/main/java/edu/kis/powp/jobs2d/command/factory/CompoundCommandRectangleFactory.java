@@ -5,8 +5,8 @@ import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
 public class CompoundCommandRectangleFactory {
-    public static CompoundCommand getRectangleAction() {
-        CompoundCommand compoundCommand = new CompoundCommand();
+    public static CompoundCommand getRectangleAction(String name) {
+        CompoundCommand compoundCommand = new CompoundCommand(name);
         compoundCommand.addCommand(new SetPositionCommand(0, 0));
         compoundCommand.addCommand(new OperateToCommand(0, 100));
         compoundCommand.addCommand(new OperateToCommand(200, 100));
