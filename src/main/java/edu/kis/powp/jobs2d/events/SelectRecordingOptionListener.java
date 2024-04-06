@@ -17,7 +17,6 @@ public class SelectRecordingOptionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (option){
-            case STOP: RecordFeature.stop();break;
             case CLEAR: RecordFeature.clear(); break;
             case START: RecordFeature.start();break;
         }

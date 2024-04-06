@@ -5,9 +5,9 @@ import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import edu.kis.powp.jobs2d.features.RecordFeature;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 
-public class RecordingDriver implements Job2dDriver{
+public class RecordingDriverDecorator implements Job2dDriver{
     private final Job2dDriver job2dDriver;
-    public RecordingDriver(Job2dDriver driver) {
+    public RecordingDriverDecorator(Job2dDriver driver) {
         job2dDriver = driver;
     }
     @Override
