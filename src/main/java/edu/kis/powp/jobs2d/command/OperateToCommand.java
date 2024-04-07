@@ -9,14 +9,6 @@ public class OperateToCommand implements DriverCommand {
 
 	private int posX, posY;
 
-	public int getPosX() {
-		return posX;
-	}
-
-	public int getPosY() {
-		return posY;
-	}
-
 	public OperateToCommand(int posX, int posY) {
 		super();
 		this.posX = posX;

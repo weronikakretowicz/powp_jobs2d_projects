@@ -1,23 +1,35 @@
 package edu.kis.powp.jobs2d.command;
 
 public class CommandCounterVisitor implements CommandVisitor {
+	private int operateToCount = 0;
+
+	private int setPositionCount = 0;
+	private int iCompoundCommand = 0;
+
+	public int getOperateToCount() {
+		return operateToCount;
+	}
+
+	public int getSetPositionCount() {
+		return setPositionCount;
+	}
+
+	public int getICompoundCommand() {
+		return iCompoundCommand;
+	}
 
 	@Override
 	public void visit(OperateToCommand operateToCommand) {
-		System.out.println("Visited OperateToCommand");
-		System.out.println("X: " + operateToCommand.getPosX());
-		System.out.println("Y: " + operateToCommand.getPosY());
+		operateToCount++;
 	}
 
 	@Override
 	public void visit(SetPositionCommand setPositionCommand) {
-		System.out.println("Visited SetPositionCommand");
-		System.out.println("X: " + setPositionCommand.getPosX());
-		System.out.println("Y: " + setPositionCommand.getPosY());
+		setPositionCount++;
 	}
 
 	@Override
 	public void visit(ICompoundCommand compoundCommand) {
-		System.out.println("Visited ICompoundCommand");
+		iCompoundCommand++;
 	}
 }
