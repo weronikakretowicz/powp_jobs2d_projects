@@ -22,6 +22,7 @@ public class CommandCounterVisitor implements CommandVisitor {
 	public void visit(OperateToCommand operateToCommand) {
 		if (operateToCount == 0) {
 			operateToCount = 1;
+			setPositionCount = 0;
 		}
 	}
 
@@ -29,6 +30,7 @@ public class CommandCounterVisitor implements CommandVisitor {
 	public void visit(SetPositionCommand setPositionCommand) {
 		if (setPositionCount == 0) {
 			setPositionCount = 1;
+			operateToCount = 0;
 		}
 	}
 
