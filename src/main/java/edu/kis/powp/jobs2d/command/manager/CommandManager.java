@@ -4,23 +4,22 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.CommandCounterVisitor;
 import edu.kis.powp.jobs2d.command.CommandVisitor;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.observer.Publisher;
 
 /**
- * Driver command Manager.
+ * Command Manager.
  */
-public class DriverCommandManager {
+public class CommandManager {
 	private DriverCommand currentCommand = null;
 
 	private Publisher changePublisher = new Publisher();
 
 	/**
 	 * Set current command.
-	 * 
+	 *
 	 * @param commandList Set the command as current.
 	 */
 	public synchronized void setCurrentCommand(DriverCommand commandList) {
@@ -30,7 +29,7 @@ public class DriverCommandManager {
 
 	/**
 	 * Set current command.
-	 * 
+	 *
 	 * @param commandList list of commands representing a compound command.
 	 * @param name        name of the command.
 	 */
@@ -45,8 +44,8 @@ public class DriverCommandManager {
 			}
 
 			@Override
-			public void accept(CommandVisitor commandCounter) {
-				commandCounter.visit(this);
+			public void accept(CommandVisitor commandVisitor) {
+				commandVisitor.visit(this);
 			}
 
 			@Override
@@ -64,7 +63,7 @@ public class DriverCommandManager {
 
 	/**
 	 * Return current command.
-	 * 
+	 *
 	 * @return Current command.
 	 */
 	public synchronized DriverCommand getCurrentCommand() {
