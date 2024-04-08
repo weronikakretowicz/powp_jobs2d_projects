@@ -10,16 +10,15 @@ public class CommandsFeature {
 	public static void setupCommandManager() {
 		commandManager = new CommandManager();
 
-		LoggerCommandChangeObserver loggerObserver = new LoggerCommandChangeObserver();
-		commandManager.getChangePublisher().addSubscriber(loggerObserver);
-	}
-
-	/**
-	 * Get manager of application driver command.
-	 *
-	 * @return plotterCommandManager.
-	 */
-	public static CommandManager getCommandManager() {
-		return commandManager;
-	}
+        LoggerCommandChangeObserver loggerObserver = new LoggerCommandChangeObserver();
+        commandManager.getChangePublisher().addSubscriber(loggerObserver);
+    }
+    /**
+     * Get manager of application driver command.
+     *
+     * @return plotterCommandManager.
+     */
+    public static CommandManager getCommandManager() {
+        return commandManager;
+    }
 }

@@ -15,7 +15,6 @@ import edu.kis.powp.jobs2d.command.manager.CommandManager;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
-
 	private CommandManager commandManager;
 
 	private JTextArea currentCommandField;
@@ -108,5 +107,4 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 			this.setVisible(true);
 		}
 	}
-
 }
