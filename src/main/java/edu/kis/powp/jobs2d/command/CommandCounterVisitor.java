@@ -4,7 +4,7 @@ public class CommandCounterVisitor implements CommandVisitor {
 	private int operateToCount = 0;
 
 	private int setPositionCount = 0;
-	private int iCompoundCommand = 0;
+	private int iCompoundCommandCount = 0;
 
 	public int getOperateToCount() {
 		return operateToCount;
@@ -14,22 +14,26 @@ public class CommandCounterVisitor implements CommandVisitor {
 		return setPositionCount;
 	}
 
-	public int getICompoundCommand() {
-		return iCompoundCommand;
+	public int getICompoundCommandCount() {
+		return iCompoundCommandCount;
 	}
 
 	@Override
 	public void visit(OperateToCommand operateToCommand) {
-		operateToCount++;
+		if (operateToCount == 0) {
+			operateToCount = 1;
+		}
 	}
 
 	@Override
 	public void visit(SetPositionCommand setPositionCommand) {
-		setPositionCount++;
+		if (setPositionCount == 0) {
+			setPositionCount = 1;
+		}
 	}
 
 	@Override
 	public void visit(ICompoundCommand compoundCommand) {
-		iCompoundCommand++;
+		iCompoundCommandCount++;
 	}
 }
