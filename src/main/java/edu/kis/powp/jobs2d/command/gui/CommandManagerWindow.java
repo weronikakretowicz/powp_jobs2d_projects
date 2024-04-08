@@ -64,8 +64,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.gridx = 0;
-        c.weighty = 1;
-        content.add( commandPreviewPanel.getDrawArea(),c);
+        c.weighty = 5;
+        JPanel drawArea = commandPreviewPanel.getDrawArea();
+        drawArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        content.add(drawArea ,c);
 
         JButton btnClearCommand = new JButton("Clear command");
         btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
