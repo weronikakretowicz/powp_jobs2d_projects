@@ -11,6 +11,6 @@ public class SelectLoadRecordedCommandOptionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         CommandManager manager = CommandsFeature.getCommandManager();
-        manager.setCurrentCommand(RecordFeature.getCommands(), "RecordedCommands");
+        manager.setCurrentCommand(RecordFeature.getRecordedCommand());
     }
 }

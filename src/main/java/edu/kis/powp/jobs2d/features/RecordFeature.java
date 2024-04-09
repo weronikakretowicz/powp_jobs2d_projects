@@ -44,4 +44,8 @@ public class RecordFeature {
     public static List<DriverCommand> getCommands(){
         return recordCommand.getCommands();
     }
+
+    public static DriverCommand getRecordedCommand() {
+        return recordCommand;
+    }
 }
