@@ -74,7 +74,7 @@ public class TestJobs2dApp {
         DriversComposite driversComposite = new DriversComposite();
         driversComposite.addDriver(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"));
         driversComposite.addDriver(new LoggerDriver(true));
-        DriverFeature.addDriver("Drivers composite simulator", driver);
+        DriverFeature.addDriver("Drivers composite simulator", driversComposite);
     }
 
     private static void setupWindows(Application application) {
