@@ -25,13 +25,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
     private String observerListString;
     private JTextArea observerListField;
-
+    final private Job2dDriver previewLineDriver;
     /**
      *
      */
     private static final long serialVersionUID = 9204679248304669948L;
 
     public CommandManagerWindow(CommandManager commandManager) {
+        this.previewLineDriver = new LineDriverAdapter(drawPanelController,new BasicLine(),"preview");
         this.setTitle("Command Manager");
         this.setSize(400, 400);
         Container content = this.getContentPane();
@@ -94,9 +95,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     public void updateCurrentCommandField() {
         currentCommandField.setText(commandManager.getCurrentCommandString());
 
-        Job2dDriver driver = new LineDriverAdapter(drawPanelController,new BasicLine(),"preview");
         drawPanelController.clearPanel();
-        commandManager.getCurrentCommand().execute(driver);
+        commandManager.getCurrentCommand().execute(previewLineDriver);
     }
 
     public void deleteObservers() {
