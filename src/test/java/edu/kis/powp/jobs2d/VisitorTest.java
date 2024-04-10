@@ -19,13 +19,9 @@ public class VisitorTest implements ActionListener {
 
 		CommandCounterVisitor commandCounter = new CommandCounterVisitor();
 
-		Iterator<DriverCommand> iterator = compoundCommand.iterator();
-		while (iterator.hasNext()) {
-			DriverCommand command = iterator.next();
-			command.accept(commandCounter);
+		compoundCommand.accept(commandCounter);
 
-			logger.info("OperateTo commands: " + commandCounter.getOperateToCount());
-			logger.info("SetPosition commands: " + commandCounter.getSetPositionCount());
-		}
-	}
+        logger.info("OperateTo commands: " + commandCounter.getOperateToCount());
+        logger.info("SetPosition commands: " + commandCounter.getSetPositionCount());
+    }
 }
