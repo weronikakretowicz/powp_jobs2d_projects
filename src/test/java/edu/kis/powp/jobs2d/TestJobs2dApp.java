@@ -57,22 +57,27 @@ public class TestJobs2dApp {
      */
     private static void setupDrivers(Application application) {
         Job2dDriver loggerDriver = new LoggerDriver(false);
-        UsageMonitorDriverDecorator loggerMonitor = new UsageMonitorDriverDecorator(loggerDriver);
-        DriverFeature.addDriver("Simple Logger driver", loggerMonitor);
+        DriverFeature.addDriver("Simple Logger driver", loggerDriver);
 
         Job2dDriver loggerDriver2 = new LoggerDriver(true);
-        UsageMonitorDriverDecorator loggerMonitor2 = new UsageMonitorDriverDecorator(loggerDriver);
-        DriverFeature.addDriver("Detailed Logger driver", loggerMonitor2);
+        DriverFeature.addDriver("Detailed Logger driver", loggerDriver2);
 
         DrawPanelController drawerController = DrawerFeature.getDrawerController();
         Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-        UsageMonitorDriverDecorator loggerMonitor3 = new UsageMonitorDriverDecorator(driver);
-        DriverFeature.addDriver("Line Simulator", loggerMonitor3);
+        DriverFeature.addDriver("Line Simulator", driver);
         DriverFeature.getDriverManager().setCurrentDriver(driver);
 
         driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
-        UsageMonitorDriverDecorator loggerMonitor4 = new UsageMonitorDriverDecorator(driver);
-        DriverFeature.addDriver("Special line Simulator", loggerMonitor4);
+        DriverFeature.addDriver("Special line Simulator", driver);
+
+        driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
+        UsageMonitorDriverDecorator usageMonitorDriver = new UsageMonitorDriverDecorator(driver);
+        DriverFeature.addDriver("Line Simulator with usage monitor", usageMonitorDriver);
+
+        driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
+        UsageMonitorDriverDecorator usageMonitorDriver2 = new UsageMonitorDriverDecorator(driver);
+        DriverFeature.addDriver("Special line Simulator with usage monitor", usageMonitorDriver2);
+
         DriverFeature.updateDriverInfo();
     }
 
