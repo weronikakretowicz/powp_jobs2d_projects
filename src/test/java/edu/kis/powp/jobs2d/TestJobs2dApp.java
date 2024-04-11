@@ -77,9 +77,9 @@ public class TestJobs2dApp {
         driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
         DriverFeature.addDriver("Special line Simulator", driver);
 
-        driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
+        driver = new LoggerDriver(false);
         UsageMonitorDriverDecorator usageMonitorDriver = new UsageMonitorDriverDecorator(driver);
-        DriverFeature.addDriver("Line Simulator with usage monitor", usageMonitorDriver);
+        DriverFeature.addDriver("Usage monitor with logger", usageMonitorDriver);
 
         driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
         UsageMonitorDriverDecorator usageMonitorDriver2 = new UsageMonitorDriverDecorator(driver);
@@ -110,7 +110,7 @@ public class TestJobs2dApp {
      */
     private static void setupLogger(Application application) {
 
-        application.addComponentMenu(Logger.class, "Logger (with recording support)", 0);
+        application.addComponentMenu(Logger.class, "Logger", 0);
         application.addComponentMenuElement(Logger.class, "Clear log",
                 (ActionEvent e) -> application.flushLoggerOutput());
         application.addComponentMenuElement(Logger.class, "Fine level", (ActionEvent e) -> logger.setLevel(Level.FINE));
