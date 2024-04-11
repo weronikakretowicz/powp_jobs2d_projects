@@ -11,6 +11,7 @@ import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.DriversComposite;
+import edu.kis.powp.jobs2d.drivers.UsageMonitorDriverDecorator;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.RecordingDriverDecorator;
 import edu.kis.powp.jobs2d.events.*;
@@ -73,6 +74,17 @@ public class TestJobs2dApp {
 
         driver = new RecordingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special"));
         DriverFeature.addDriver("Special Line Simulator with Recording Support", driver);
+        driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
+        DriverFeature.addDriver("Special line Simulator", driver);
+
+        driver = new LoggerDriver(false);
+        UsageMonitorDriverDecorator usageMonitorDriver = new UsageMonitorDriverDecorator(driver);
+        DriverFeature.addDriver("Usage monitor with logger", usageMonitorDriver);
+
+        driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
+        UsageMonitorDriverDecorator usageMonitorDriver2 = new UsageMonitorDriverDecorator(driver);
+        DriverFeature.addDriver("Special line Simulator with usage monitor", usageMonitorDriver2);
+
         DriverFeature.updateDriverInfo();
 
         DriversComposite driversComposite = new DriversComposite();
@@ -98,7 +110,7 @@ public class TestJobs2dApp {
      */
     private static void setupLogger(Application application) {
 
-        application.addComponentMenu(Logger.class, "Logger (with recording support)", 0);
+        application.addComponentMenu(Logger.class, "Logger", 0);
         application.addComponentMenuElement(Logger.class, "Clear log",
                 (ActionEvent e) -> application.flushLoggerOutput());
         application.addComponentMenuElement(Logger.class, "Fine level", (ActionEvent e) -> logger.setLevel(Level.FINE));
