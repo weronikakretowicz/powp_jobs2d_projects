@@ -10,7 +10,7 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
-import edu.kis.powp.jobs2d.drivers.UsageMonitorDriver;
+import edu.kis.powp.jobs2d.drivers.UsageMonitorDriverDecorator;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
@@ -57,21 +57,21 @@ public class TestJobs2dApp {
      */
     private static void setupDrivers(Application application) {
         Job2dDriver loggerDriver = new LoggerDriver(false);
-        UsageMonitorDriver loggerMonitor = new UsageMonitorDriver(loggerDriver);
+        UsageMonitorDriverDecorator loggerMonitor = new UsageMonitorDriverDecorator(loggerDriver);
         DriverFeature.addDriver("Simple Logger driver", loggerMonitor);
 
         Job2dDriver loggerDriver2 = new LoggerDriver(true);
-        UsageMonitorDriver loggerMonitor2 = new UsageMonitorDriver(loggerDriver);
+        UsageMonitorDriverDecorator loggerMonitor2 = new UsageMonitorDriverDecorator(loggerDriver);
         DriverFeature.addDriver("Detailed Logger driver", loggerMonitor2);
 
         DrawPanelController drawerController = DrawerFeature.getDrawerController();
         Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-        UsageMonitorDriver loggerMonitor3 = new UsageMonitorDriver(driver);
+        UsageMonitorDriverDecorator loggerMonitor3 = new UsageMonitorDriverDecorator(driver);
         DriverFeature.addDriver("Line Simulator", loggerMonitor3);
         DriverFeature.getDriverManager().setCurrentDriver(driver);
 
         driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
-        UsageMonitorDriver loggerMonitor4 = new UsageMonitorDriver(driver);
+        UsageMonitorDriverDecorator loggerMonitor4 = new UsageMonitorDriverDecorator(driver);
         DriverFeature.addDriver("Special line Simulator", loggerMonitor4);
         DriverFeature.updateDriverInfo();
     }
