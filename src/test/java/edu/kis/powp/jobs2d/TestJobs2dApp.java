@@ -54,8 +54,8 @@ public class TestJobs2dApp {
     }
   
     private static void setupVisitorTest(Application application) {
-		  application.addTest("Show current command stats", new VisitorTest());
-	  }
+        application.addTest("Show current command stats", new VisitorTest());
+    }
 
     /**
      * Setup driver manager, and set default Job2dDriver for application.

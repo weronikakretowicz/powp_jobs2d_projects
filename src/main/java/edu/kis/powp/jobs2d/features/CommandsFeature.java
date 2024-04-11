@@ -5,10 +5,10 @@ import edu.kis.powp.jobs2d.command.manager.LoggerCommandChangeObserver;
 
 public class CommandsFeature {
 
-	private static CommandManager commandManager;
+    private static CommandManager commandManager;
 
-	public static void setupCommandManager() {
-		commandManager = new CommandManager();
+    public static void setupCommandManager() {
+        commandManager = new CommandManager();
 
         LoggerCommandChangeObserver loggerObserver = new LoggerCommandChangeObserver();
         commandManager.getChangePublisher().addSubscriber(loggerObserver);
