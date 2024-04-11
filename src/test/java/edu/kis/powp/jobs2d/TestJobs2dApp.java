@@ -54,7 +54,7 @@ public class TestJobs2dApp {
     }
   
     private static void setupVisitorTest(Application application) {
-		  application.addTest("Visitor Test", new VisitorTest());
+		  application.addTest("Show current command stats", new VisitorTest());
 	  }
 
     /**
