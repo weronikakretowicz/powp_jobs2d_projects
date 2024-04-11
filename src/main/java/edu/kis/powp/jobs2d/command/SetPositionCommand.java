@@ -20,8 +20,8 @@ public class SetPositionCommand implements DriverCommand {
         driver.setPosition(posX, posY);
     }
 
-	@Override
-	public void accept(CommandVisitor commandVisitor) {
-		commandVisitor.visit(this);
-	}
+    @Override
+    public void accept(CommandVisitor commandVisitor) {
+        commandVisitor.visit(this);
+    }
 }
