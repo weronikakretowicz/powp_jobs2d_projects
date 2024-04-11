@@ -43,6 +43,6 @@ public class DriversComposite implements Job2dDriver {
     public String toString() {
         return list.stream()
                 .map(Job2dDriver::toString)
-                .collect(Collectors.joining("\n", "Composite of ", ""));
+                .collect(Collectors.joining(", ", "Composite of ", ""));
     }
 }
