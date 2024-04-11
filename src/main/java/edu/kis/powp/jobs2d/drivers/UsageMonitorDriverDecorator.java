@@ -33,6 +33,14 @@ public class UsageMonitorDriverDecorator implements Job2dDriver {
         driver.operateTo(x, y);
     }
 
+    public double getHeadDistance() {
+        return headDistance;
+    }
+
+    public double getOpDistance() {
+        return opDistance;
+    }
+
     private void updateLastCoords(int x, int y) {
         lastX = x;
         lastY = y;
