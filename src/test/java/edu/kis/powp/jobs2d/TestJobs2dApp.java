@@ -10,6 +10,7 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
+import edu.kis.powp.jobs2d.drivers.DriversComposite;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.RecordingDriverDecorator;
 import edu.kis.powp.jobs2d.events.*;
@@ -73,6 +74,11 @@ public class TestJobs2dApp {
         driver = new RecordingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special"));
         DriverFeature.addDriver("Special Line Simulator with Recording Support", driver);
         DriverFeature.updateDriverInfo();
+
+        DriversComposite driversComposite = new DriversComposite();
+        driversComposite.addDriver(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"));
+        driversComposite.addDriver(new LoggerDriver(true));
+        DriverFeature.addDriver("BasicLine with Logger", driversComposite);
     }
 
     private static void setupWindows(Application application) {
