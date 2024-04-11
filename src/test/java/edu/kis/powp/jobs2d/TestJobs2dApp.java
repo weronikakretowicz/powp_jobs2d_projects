@@ -11,11 +11,13 @@ import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
+import edu.kis.powp.jobs2d.drivers.RecordingDriverDecorator;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.jobs2d.drivers.LoggerDriver;
+import edu.kis.powp.jobs2d.features.RecordFeature;
 
 public class TestJobs2dApp {
     private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -45,6 +47,8 @@ public class TestJobs2dApp {
 
         application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 
+        application.addTest("Load recorded command", new SelectLoadRecordedCommandOptionListener());
+
         application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
     }
@@ -62,12 +66,13 @@ public class TestJobs2dApp {
         DriverFeature.addDriver("Detailed Logger driver", loggerDriver2);
 
         DrawPanelController drawerController = DrawerFeature.getDrawerController();
-        Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-        DriverFeature.addDriver("Line Simulator", driver);
+        Job2dDriver driver = new RecordingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"));
+        DriverFeature.addDriver("Line Simulator with Recording Support", driver);
         DriverFeature.getDriverManager().setCurrentDriver(driver);
 
-        driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
-        DriverFeature.addDriver("Special line Simulator", driver);
+        driver = new RecordingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special"));
+        DriverFeature.addDriver("Special Line Simulator with Recording Support", driver);
+        DriverFeature.updateDriverInfo();
     }
 
     private static void setupWindows(Application application) {
@@ -87,7 +92,7 @@ public class TestJobs2dApp {
      */
     private static void setupLogger(Application application) {
 
-        application.addComponentMenu(Logger.class, "Logger", 0);
+        application.addComponentMenu(Logger.class, "Logger (with recording support)", 0);
         application.addComponentMenuElement(Logger.class, "Clear log",
                 (ActionEvent e) -> application.flushLoggerOutput());
         application.addComponentMenuElement(Logger.class, "Fine level", (ActionEvent e) -> logger.setLevel(Level.FINE));
@@ -108,7 +113,7 @@ public class TestJobs2dApp {
                 Application app = new Application("Jobs 2D");
                 DrawerFeature.setupDrawerPlugin(app);
                 CommandsFeature.setupCommandManager();
-
+                RecordFeature.setupRecorderPlugin(app);
                 DriverFeature.setupDriverPlugin(app);
                 setupDrivers(app);
                 setupPresetTests(app);

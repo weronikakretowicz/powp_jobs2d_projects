@@ -40,6 +40,14 @@ public class CompoundCommand implements ICompoundCommand {
         }
     }
 
+    public void clearCommand(){
+        commands.clear();
+    }
+
+    public List<DriverCommand> getCommands(){
+        return commands;
+    }
+
     @Override
     public void execute(Job2dDriver driver) {
         iterator().forEachRemaining((c) -> c.execute(driver));
