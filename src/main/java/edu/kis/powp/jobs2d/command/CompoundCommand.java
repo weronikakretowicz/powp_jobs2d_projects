@@ -54,6 +54,11 @@ public class CompoundCommand implements ICompoundCommand {
     }
 
     @Override
+    public void accept(CommandVisitor commandVisitor) {
+        commandVisitor.visit(this);
+    }
+
+    @Override
     public Iterator<DriverCommand> iterator() {
         return commands.iterator();
     }

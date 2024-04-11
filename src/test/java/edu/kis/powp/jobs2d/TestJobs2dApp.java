@@ -54,6 +54,10 @@ public class TestJobs2dApp {
         application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
     }
+  
+    private static void setupVisitorTest(Application application) {
+        application.addTest("Show current command stats", new VisitorTest());
+    }
 
     /**
      * Setup driver manager, and set default Job2dDriver for application.
@@ -136,6 +140,7 @@ public class TestJobs2dApp {
                 setupDrivers(app);
                 setupPresetTests(app);
                 setupCommandTests(app);
+                setupVisitorTest(app);
                 setupLogger(app);
                 setupWindows(app);
 
