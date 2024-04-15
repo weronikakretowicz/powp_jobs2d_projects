@@ -10,15 +10,13 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
-import edu.kis.powp.jobs2d.drivers.DriversComposite;
-import edu.kis.powp.jobs2d.drivers.UsageMonitorDriverDecorator;
+import edu.kis.powp.jobs2d.drivers.*;
+import edu.kis.powp.jobs2d.drivers.LoggerDriver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
-import edu.kis.powp.jobs2d.drivers.RecordingDriverDecorator;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
-import edu.kis.powp.jobs2d.drivers.LoggerDriver;
 import edu.kis.powp.jobs2d.features.RecordFeature;
 
 public class TestJobs2dApp {
@@ -126,6 +124,10 @@ public class TestJobs2dApp {
         application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
     }
 
+    private static void setupMouseHandler(Application application) {
+        new MouseClickConverter(application.getFreePanel());
+    }
+
     /**
      * Launch the application.
      */
@@ -143,6 +145,7 @@ public class TestJobs2dApp {
                 setupVisitorTest(app);
                 setupLogger(app);
                 setupWindows(app);
+                setupMouseHandler(app);
 
                 app.setVisibility(true);
             }
