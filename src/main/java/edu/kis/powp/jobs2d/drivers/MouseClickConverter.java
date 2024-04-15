@@ -4,12 +4,15 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class MouseClickConverter extends MouseAdapter {
+public class MouseClickConverter implements MouseListener {
     private final int MOUSE_BUTTON_LEFT = 1;
     private final int MOUSE_BUTTON_RIGHT = 3;
+    private final int TIMER_DELAY = 100; // Milliseconds
 
     private static class Point {
         public int x;
@@ -21,35 +24,102 @@ public class MouseClickConverter extends MouseAdapter {
         }
     }
 
+    private final JPanel panel;
+    private final Timer followCursorTimer;
+    private final Job2dDriver driver;
+    private boolean isFollowingCursor = false;
+    private boolean leftButtonFirstClick = true;
+
     public MouseClickConverter(JPanel panel) {
-        panel.addMouseListener(this);
+        this.panel = panel;
+        this.panel.addMouseListener(this);
+        this.followCursorTimer = new Timer(TIMER_DELAY, new FollowCursorActionListener());
+        this.driver = DriverFeature.getDriverManager().getCurrentDriver();
     }
 
+    @Override
     public void mouseClicked(MouseEvent event) {
         Point position = getClickPosition(event);
 
         int buttonPressed = event.getButton();
 
-        handleDriver(position, buttonPressed);
+        if (buttonPressed == MOUSE_BUTTON_LEFT) {
+            handleLeftClick(position);
+        } else if (buttonPressed == MOUSE_BUTTON_RIGHT) {
+            handleRightClick(position);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // Not used in this example
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // Not used in this example
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // Not used in this example
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // Not used in this example
     }
 
     private Point getClickPosition(MouseEvent event) {
         int x = event.getX();
         int y = event.getY();
 
-        int offsetX = event.getComponent().getWidth()/2;
-        int offsetY = event.getComponent().getHeight()/2;
+        int offsetX = panel.getWidth() / 2;
+        int offsetY = panel.getHeight() / 2;
 
         return new Point(x - offsetX, y - offsetY);
     }
 
-    private void handleDriver(Point position, int buttonPressed) {
-        Job2dDriver driver = DriverFeature.getDriverManager().getCurrentDriver();
-
-        if(buttonPressed == MOUSE_BUTTON_LEFT) {
-            driver.operateTo(position.x, position.y);
-        } else if (buttonPressed == MOUSE_BUTTON_RIGHT) {
+    private void handleLeftClick(Point position) {
+        if (leftButtonFirstClick) {
             driver.setPosition(position.x, position.y);
+            leftButtonFirstClick = false;
+        } else {
+            driver.operateTo(position.x, position.y);
+            leftButtonFirstClick = true;
+        }
+    }
+
+    private void handleRightClick(Point position) {
+        if (!isFollowingCursor) {
+            driver.setPosition(position.x, position.y);
+            followCursorTimer.start();
+            isFollowingCursor = true;
+        } else {
+            followCursorTimer.stop();
+            isFollowingCursor = false;
+        }
+    }
+
+    private void updateDriverPosition() {
+        Point mousePosition = getMousePositionOnPanel();
+        driver.operateTo(mousePosition.x, mousePosition.y);
+    }
+
+    private Point getMousePositionOnPanel() {
+        int mouseX = panel.getMousePosition().x;
+        int mouseY = panel.getMousePosition().y;
+
+        int offsetX = panel.getWidth() / 2;
+        int offsetY = panel.getHeight() / 2;
+
+        return new Point(mouseX - offsetX, mouseY - offsetY);
+    }
+
+    private class FollowCursorActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateDriverPosition();
         }
     }
 }
