@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
 public class MouseClickConverter implements MouseListener {
     private final int MOUSE_BUTTON_LEFT = 1;
     private final int MOUSE_BUTTON_RIGHT = 3;
-    private final int TIMER_DELAY = 100; // Milliseconds
+    private final int TIMER_DELAY = 10; // Milliseconds
 
     private static class Point {
         public int x;
@@ -62,7 +62,9 @@ public class MouseClickConverter implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // Not used in this example
+        if (isFollowingCursor && !leftButtonFirstClick) {
+            followCursorTimer.start();
+        }
     }
 
     @Override
@@ -103,17 +105,24 @@ public class MouseClickConverter implements MouseListener {
 
     private void updateDriverPosition() {
         Point mousePosition = getMousePositionOnPanel();
-        driver.operateTo(mousePosition.x, mousePosition.y);
+        if (mousePosition != null) {
+            driver.operateTo(mousePosition.x, mousePosition.y);
+        }
     }
 
     private Point getMousePositionOnPanel() {
-        int mouseX = panel.getMousePosition().x;
-        int mouseY = panel.getMousePosition().y;
+        Point mousePosition = null;
+        java.awt.Point mousePanelPosition = panel.getMousePosition();
+        if (mousePanelPosition != null && panel.contains(mousePanelPosition)) {
+            int mouseX = mousePanelPosition.x;
+            int mouseY = mousePanelPosition.y;
 
-        int offsetX = panel.getWidth() / 2;
-        int offsetY = panel.getHeight() / 2;
+            int offsetX = panel.getWidth() / 2;
+            int offsetY = panel.getHeight() / 2;
 
-        return new Point(mouseX - offsetX, mouseY - offsetY);
+            mousePosition = new Point(mouseX - offsetX, mouseY - offsetY);
+        }
+        return mousePosition;
     }
 
     private class FollowCursorActionListener implements ActionListener {
