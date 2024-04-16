@@ -106,8 +106,16 @@ public class MouseClickConverter implements MouseListener {
     private void updateDriverPosition() {
         Point mousePosition = getMousePositionOnPanel();
         if (mousePosition != null) {
+            if(!isFollowingCursor){
+                isFollowingCursor = true;
+                driver.setPosition(mousePosition.x, mousePosition.y);
+            }
             driver.operateTo(mousePosition.x, mousePosition.y);
         }
+        else{
+           isFollowingCursor = false;
+        }
+
     }
 
     private Point getMousePositionOnPanel() {
@@ -116,6 +124,8 @@ public class MouseClickConverter implements MouseListener {
         if (mousePanelPosition != null && panel.contains(mousePanelPosition)) {
             int mouseX = mousePanelPosition.x;
             int mouseY = mousePanelPosition.y;
+
+            System.out.println(mouseX + " " + mouseY);
 
             int offsetX = panel.getWidth() / 2;
             int offsetY = panel.getHeight() / 2;
