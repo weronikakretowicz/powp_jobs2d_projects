@@ -95,8 +95,8 @@ public class TestJobs2dApp {
         driversComposite.addDriver(new LoggerDriver(true));
         DriverFeature.addDriver("BasicLine with Logger", driversComposite);
 
-        Job2dDriver scallingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled * 2", 2);
-        DriverFeature.addDriver("Scaled x2 Line Simulator", scallingDriver);
+        Job2dDriver scalingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled * 2", 2);
+        DriverFeature.addDriver("Scaled x2 Line Simulator", scalingDriver);
 
         Job2dDriver flippingDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flipped vertically", FlippingLineDriverAdapter.FLIP_VERTICALLY);
         DriverFeature.addDriver("Flip vertically Simulator", flippingDriver);
