@@ -93,8 +93,8 @@ public class TestJobs2dApp {
         driversComposite.addDriver(new LoggerDriver(true));
         DriverFeature.addDriver("BasicLine with Logger", driversComposite);
 
-        Job2dDriver scallingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled * 2", 1);
-        DriverFeature.addDriver("Scaled x2 Simulator", scallingDriver);
+        Job2dDriver scallingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled * 2", 2);
+        DriverFeature.addDriver("Scaled x2 Line Simulator", scallingDriver);
         DriverFeature.updateDriverInfo();
 
         DriverFeature.updateDriverInfo();

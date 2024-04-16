@@ -12,10 +12,10 @@ public class ScalingLineDriverAdapter implements Job2dDriver {
     private int scaledX = 0, scaledY = 0;
     private int startX = UNDEFINED_POINT_VALUE, startY = UNDEFINED_POINT_VALUE;
     private final String name;
-    private final int scalingFactor;
+    private final float scalingFactor;
     private final DrawPanelController drawController;
 
-    public ScalingLineDriverAdapter(DrawPanelController drawController, ILine line, String name, int scalingFactor) {
+    public ScalingLineDriverAdapter(DrawPanelController drawController, ILine line, String name, float scalingFactor) {
         super();
         this.drawController = drawController;
         this.line = line;
@@ -38,15 +38,15 @@ public class ScalingLineDriverAdapter implements Job2dDriver {
             int distanceY = Math.abs(unscaledY - y);
 
             if (unscaledX > x) {
-                scaledX = scaledX - (scalingFactor * distanceX);
+                scaledX = Math.round(scaledX - (scalingFactor * distanceX));
             } else if (unscaledX < x) {
-                scaledX = scaledX + (scalingFactor * distanceX);
+                scaledX = Math.round(scaledX + (scalingFactor * distanceX));
             }
 
             if (unscaledY > y) {
-                scaledY = scaledY - (scalingFactor * distanceY);
+                scaledY = Math.round(scaledY - (scalingFactor * distanceY));
             } else if (unscaledY < y) {
-                scaledY = scaledX + (scalingFactor * distanceY);
+                scaledY = Math.round(scaledY + (scalingFactor * distanceY));
             }
         }
 
