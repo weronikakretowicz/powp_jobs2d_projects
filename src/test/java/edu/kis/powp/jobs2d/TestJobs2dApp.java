@@ -12,6 +12,7 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.*;
 import edu.kis.powp.jobs2d.drivers.LoggerDriver;
+import edu.kis.powp.jobs2d.drivers.adapter.FlippingLineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.ScalingLineDriverAdapter;
 import edu.kis.powp.jobs2d.events.*;
@@ -95,7 +96,9 @@ public class TestJobs2dApp {
 
         Job2dDriver scallingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled * 2", 2);
         DriverFeature.addDriver("Scaled x2 Line Simulator", scallingDriver);
-        DriverFeature.updateDriverInfo();
+
+        Job2dDriver flippingDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flipped vertically", FlippingLineDriverAdapter.FLIP_VERTICALLY);
+        DriverFeature.addDriver("Flip vertically Simulator", flippingDriver);
 
         DriverFeature.updateDriverInfo();
     }
