@@ -13,6 +13,7 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver
 import edu.kis.powp.jobs2d.drivers.*;
 import edu.kis.powp.jobs2d.drivers.LoggerDriver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
+import edu.kis.powp.jobs2d.drivers.adapter.ScalingLineDriverAdapter;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
@@ -87,12 +88,16 @@ public class TestJobs2dApp {
         UsageMonitorDriverDecorator usageMonitorDriver2 = new UsageMonitorDriverDecorator(driver);
         DriverFeature.addDriver("Special line Simulator with usage monitor", usageMonitorDriver2);
 
-        DriverFeature.updateDriverInfo();
-
         DriversComposite driversComposite = new DriversComposite();
         driversComposite.addDriver(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"));
         driversComposite.addDriver(new LoggerDriver(true));
         DriverFeature.addDriver("BasicLine with Logger", driversComposite);
+
+        Job2dDriver scallingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled * 2", 1);
+        DriverFeature.addDriver("Scaled x2 Simulator", scallingDriver);
+        DriverFeature.updateDriverInfo();
+
+        DriverFeature.updateDriverInfo();
     }
 
     private static void setupWindows(Application application) {
