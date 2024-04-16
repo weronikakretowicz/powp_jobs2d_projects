@@ -14,6 +14,7 @@ import edu.kis.powp.jobs2d.drivers.*;
 import edu.kis.powp.jobs2d.drivers.LoggerDriver;
 import edu.kis.powp.jobs2d.drivers.adapter.FlippingLineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
+import edu.kis.powp.jobs2d.drivers.adapter.RotatingLineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.ScalingLineDriverAdapter;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
@@ -99,6 +100,9 @@ public class TestJobs2dApp {
 
         Job2dDriver flippingDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flipped vertically", FlippingLineDriverAdapter.FLIP_VERTICALLY);
         DriverFeature.addDriver("Flip vertically Simulator", flippingDriver);
+
+        Job2dDriver rotatingDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 90 deg clockwise", RotatingLineDriverAdapter.ROTATE_90_CLOCKWISE);
+        DriverFeature.addDriver("Rotate 90deg clockwise Simulator", rotatingDriver);
 
         DriverFeature.updateDriverInfo();
     }
