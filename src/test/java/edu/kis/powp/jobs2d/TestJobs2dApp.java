@@ -95,14 +95,26 @@ public class TestJobs2dApp {
         driversComposite.addDriver(new LoggerDriver(true));
         DriverFeature.addDriver("BasicLine with Logger", driversComposite);
 
-        Job2dDriver scalingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled * 2", 2);
+        Job2dDriver scalingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled x2", 2);
         DriverFeature.addDriver("Scaled x2 Line Simulator", scalingDriver);
 
-        Job2dDriver flippingDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flipped vertically", FlippingLineDriverAdapter.FLIP_VERTICALLY);
-        DriverFeature.addDriver("Flip vertically Simulator", flippingDriver);
+        Job2dDriver flippingVerticallyDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flip vertically", FlippingLineDriverAdapter.FLIP_VERTICALLY);
+        DriverFeature.addDriver("Flip vertically Simulator", flippingVerticallyDriver);
 
-        Job2dDriver rotatingDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 90 deg clockwise", RotatingLineDriverAdapter.ROTATE_90_CLOCKWISE);
-        DriverFeature.addDriver("Rotate 90deg clockwise Simulator", rotatingDriver);
+        Job2dDriver flippingHorizontallyDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flip horizontally", FlippingLineDriverAdapter.FLIP_HORIZONTALLY);
+        DriverFeature.addDriver("Flip horizontally Simulator", flippingHorizontallyDriver);
+
+        Job2dDriver flippingBothSidesDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flip both sides", FlippingLineDriverAdapter.FLIP_BOTH_SIDES);
+        DriverFeature.addDriver("Flip both sides Simulator", flippingBothSidesDriver);
+
+        Job2dDriver rotating90DegClockDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 90 deg clockwise", RotatingLineDriverAdapter.ROTATE_90_CLOCKWISE);
+        DriverFeature.addDriver("Rotate 90deg clockwise Simulator", rotating90DegClockDriver);
+
+        Job2dDriver rotating90DegCounterClockDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 90 deg counterclockwise", RotatingLineDriverAdapter.ROTATE_90_COUNTERCLOCKWISE);
+        DriverFeature.addDriver("Rotate 90deg counterclockwise Simulator", rotating90DegCounterClockDriver);
+
+        Job2dDriver rotating180DegDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 180 deg", RotatingLineDriverAdapter.ROTATE_180);
+        DriverFeature.addDriver("Rotate 180deg Simulator", rotating180DegDriver);
 
         DriverFeature.updateDriverInfo();
     }
