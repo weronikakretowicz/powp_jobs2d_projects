@@ -31,7 +31,6 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     private static final long serialVersionUID = 9204679248304669948L;
 
     public CommandManagerWindow(CommandManager commandManager) {
-        this.previewLineDriver = new LineDriverAdapter(drawPanelController,new BasicLine(),"preview");
         this.setTitle("Command Manager");
         this.setSize(400, 400);
         Container content = this.getContentPane();
@@ -61,6 +60,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         commandPreviewPanel = new DefaultDrawerFrame();
         drawPanelController = new DrawPanelController();
         drawPanelController.initialize(commandPreviewPanel.getDrawArea());
+        previewLineDriver = new LineDriverAdapter(drawPanelController,new BasicLine(),"preview");
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.gridx = 0;
