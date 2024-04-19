@@ -48,8 +48,6 @@ public class TestJobs2dApp {
         application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 
         application.addTest("Load recorded command", new SelectLoadRecordedCommandOptionListener());
-//         TODO: USUNĄĆ
-//        application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
     }
   
     private static void setupVisitorTest(Application application) {
