@@ -6,13 +6,19 @@ import java.util.List;
 
 import javax.swing.*;
 
+//import com.sun.org.apache.bcel.internal.generic.Select;
 import edu.kis.legacy.drawer.panel.DefaultDrawerFrame;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.line.BasicLine;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.CommandManager;
+import edu.kis.powp.jobs2d.drivers.DriverManager;
+import edu.kis.powp.jobs2d.drivers.SelectDriverMenuOptionListener;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
+import edu.kis.powp.jobs2d.features.CommandsFeature;
+import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -25,6 +31,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     private String observerListString;
     private JTextArea observerListField;
     final private Job2dDriver previewLineDriver;
+
+    private DriverManager driverManager;
     /**
      *
      */
@@ -69,6 +77,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         drawArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         content.add(drawArea ,c);
 
+        JButton btnRunCommand = new JButton("Run command");
+        btnRunCommand.addActionListener((ActionEvent e) -> this.runCommand());
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.gridx = 0;
+        c.weighty = 1;
+        content.add(btnRunCommand, c);
+
         JButton btnClearCommand = new JButton("Clear command");
         btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
         c.fill = GridBagConstraints.BOTH;
@@ -89,6 +105,12 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     private void clearCommand() {
         commandManager.clearCurrentCommand();
         updateCurrentCommandField();
+    }
+
+    private void runCommand(){
+        driverManager = DriverFeature.getDriverManager();
+        DriverCommand command = CommandsFeature.getCommandManager().getCurrentCommand();
+        command.execute(driverManager.getCurrentDriver());
     }
 
     public void updateCurrentCommandField() {
