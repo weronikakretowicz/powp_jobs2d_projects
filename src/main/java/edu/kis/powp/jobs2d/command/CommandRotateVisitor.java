@@ -19,8 +19,8 @@ public class CommandRotateVisitor extends TransformationVisitor {
         int newX = (int) (x * Math.cos(this.angleInRadians) - y * Math.sin(this.angleInRadians));
         int newY = (int) (x * Math.sin(this.angleInRadians) + y * Math.cos(this.angleInRadians));
 
-        DriverCommand scaledCommand = new OperateToCommand(newX, newY);
-        this.add(scaledCommand);
+        DriverCommand rotatedCommand = new OperateToCommand(newX, newY);
+        this.add(rotatedCommand);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CommandRotateVisitor extends TransformationVisitor {
         int newX = (int) (x * Math.cos(this.angleInRadians) - y * Math.sin(this.angleInRadians));
         int newY = (int) (x * Math.sin(this.angleInRadians) + y * Math.cos(this.angleInRadians));
 
-        DriverCommand scaledCommand = new SetPositionCommand(newX, newY);
-        this.add(scaledCommand);
+        DriverCommand rotatedCommand = new SetPositionCommand(newX, newY);
+        this.add(rotatedCommand);
     }
 }
