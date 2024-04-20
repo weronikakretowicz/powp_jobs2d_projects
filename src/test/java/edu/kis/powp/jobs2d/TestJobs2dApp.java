@@ -57,6 +57,12 @@ public class TestJobs2dApp {
         application.addTest("Show current command stats", new VisitorTest());
     }
 
+    private static void setupTransformationTests(Application application) {
+        application.addTest("Flip command", new CommandFlipTest());
+        application.addTest("Scale command (scale = 2)", new CommandScaleTest(2));
+        application.addTest("Rotate command (degrees = 15)", new CommandRotateTest(15));
+    }
+
     /**
      * Setup driver manager, and set default Job2dDriver for application.
      *
@@ -143,6 +149,7 @@ public class TestJobs2dApp {
                 setupPresetTests(app);
                 setupCommandTests(app);
                 setupVisitorTest(app);
+                setupTransformationTests(app);
                 setupLogger(app);
                 setupWindows(app);
                 setupMouseHandler(app);
