@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class CommandScaleTest implements ActionListener {
 
-    double scale;
+    private final double scale;
     public CommandScaleTest(double scale) {
         this.scale = scale;
     }
@@ -18,12 +18,10 @@ public class CommandScaleTest implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         CommandManager commandManager = CommandsFeature.getCommandManager();
-        CommandScaleVisitor commandScaleVisitor = new CommandScaleVisitor(this.scale);
+        DriverCommand currentCommand = commandManager.getCurrentCommand();
+        CommandScaleVisitor commandScaleVisitor = new CommandScaleVisitor(currentCommand.toString(), this.scale);
 
-        DriverCommand command = commandManager.getCurrentCommand();
-
-        command.accept(commandScaleVisitor);
-
-        commandManager.setCurrentCommand(commandScaleVisitor.getCompoundCommand());
+        currentCommand.accept(commandScaleVisitor);
+        commandManager.setCurrentCommand(commandScaleVisitor.getTransformedCommand());
     }
 }

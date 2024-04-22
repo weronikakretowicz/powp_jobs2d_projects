@@ -1,31 +1,20 @@
 package edu.kis.powp.jobs2d.command;
 
-import edu.kis.powp.jobs2d.command.manager.TransformationVisitor;
+import java.awt.Point;
 
 public class CommandScaleVisitor extends TransformationVisitor {
 
     private final double scale;
 
-    public CommandScaleVisitor(double scale) {
-        super("Scaled("+scale+"x)");
+    public CommandScaleVisitor(String name, double scale) {
+        super(name + "_scaled("+scale+"x)");
         this.scale = scale;
     }
 
     @Override
-    public void visit(OperateToCommand operateToCommand) {
-        operateToCommand.execute(getDriver());
-        int x = getDriver().getX();
-        int y = getDriver().getY();
-        DriverCommand scaledCommand = new OperateToCommand((int) (this.scale * x), (int) (this.scale * y));
-        this.add(scaledCommand);
-    }
-
-    @Override
-    public void visit(SetPositionCommand setPositionCommand) {
-        setPositionCommand.execute(getDriver());
-        int x = getDriver().getX();
-        int y = getDriver().getY();
-        DriverCommand scaledCommand = new SetPositionCommand((int) (this.scale * x), (int) (this.scale * y));
-        this.add(scaledCommand);
+    protected Point transform(Point point) {
+        int newX = (int) (this.scale * point.x);
+        int newY = (int) (this.scale * point.y);
+        return new Point(newX, newY);
     }
 }

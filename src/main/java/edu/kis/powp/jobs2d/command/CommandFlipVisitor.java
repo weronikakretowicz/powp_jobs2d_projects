@@ -1,28 +1,17 @@
 package edu.kis.powp.jobs2d.command;
 
-import edu.kis.powp.jobs2d.command.manager.TransformationVisitor;
+import java.awt.Point;
 
 public class CommandFlipVisitor extends TransformationVisitor {
 
-    public CommandFlipVisitor() {
-        super("Flipped");
+    public CommandFlipVisitor(String name) {
+        super(name + "_flipped");
     }
 
     @Override
-    public void visit(OperateToCommand operateToCommand) {
-        operateToCommand.execute(getDriver());
-        int x = getDriver().getX();
-        int y = getDriver().getY();
-        DriverCommand flippedCommand = new OperateToCommand(-x, y);
-        this.add(flippedCommand);
-    }
-
-    @Override
-    public void visit(SetPositionCommand setPositionCommand) {
-        setPositionCommand.execute(getDriver());
-        int x = getDriver().getX();
-        int y = getDriver().getY();
-        DriverCommand flippedCommand = new SetPositionCommand(-x, y);
-        this.add(flippedCommand);
+    protected Point transform(Point point) {
+        int newX = point.x * -1;
+        int newY = point.y;
+        return new Point(newX, newY);
     }
 }
