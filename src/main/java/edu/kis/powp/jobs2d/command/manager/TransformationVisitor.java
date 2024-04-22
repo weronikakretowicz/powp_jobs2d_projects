@@ -35,8 +35,8 @@ public abstract class TransformationVisitor implements CommandVisitor {
         compoundCommand.iterator().forEachRemaining(command -> command.accept(this));
     }
 
-    protected void add(DriverCommand scaledCommand) {
-        this.transformedCommands.add(scaledCommand);
+    protected void add(DriverCommand command) {
+        this.transformedCommands.add(command);
     }
 
     @Override
