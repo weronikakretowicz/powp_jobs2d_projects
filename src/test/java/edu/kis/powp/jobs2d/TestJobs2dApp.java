@@ -2,6 +2,7 @@ package edu.kis.powp.jobs2d;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.sql.Driver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +17,7 @@ import edu.kis.powp.jobs2d.drivers.adapter.FlippingLineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.RotatingLineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.ScalingLineDriverAdapter;
+import edu.kis.powp.jobs2d.drivers.transformations.ScalingDecorator;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
@@ -115,6 +117,14 @@ public class TestJobs2dApp {
 
         Job2dDriver rotating180DegDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 180 deg", RotatingLineDriverAdapter.ROTATE_180);
         DriverFeature.addDriver("Rotate 180deg Simulator", rotating180DegDriver);
+
+        Job2dDriver test = new ScalingDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 0.5f);
+//        Job2dDriver test = new ScalingDecorator(new LoggerDriver(false), 0.5f);
+//        DriversComposite test = new DriversComposite();
+//        test.addDriver(new ScalingDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 0.5f));
+//        test.addDriver(new ScalingDecorator(new LoggerDriver(true), 0.5f));
+//        Job2dDriver test = new ScalingDecorator(DriverFeature.getDriverManager().getCurrentDriver(), 0.5f);
+        DriverFeature.addDriver("TEST", test);
 
         DriverFeature.updateDriverInfo();
     }
