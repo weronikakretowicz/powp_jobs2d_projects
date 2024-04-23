@@ -2,7 +2,6 @@ package edu.kis.powp.jobs2d;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.sql.Driver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,11 +12,9 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.*;
 import edu.kis.powp.jobs2d.drivers.LoggerDriver;
-import edu.kis.powp.jobs2d.drivers.adapter.FlippingLineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
-import edu.kis.powp.jobs2d.drivers.adapter.RotatingLineDriverAdapter;
-import edu.kis.powp.jobs2d.drivers.adapter.ScalingLineDriverAdapter;
-import edu.kis.powp.jobs2d.drivers.transformations.ScalingDecorator;
+import edu.kis.powp.jobs2d.drivers.transformators.RotatingDecorator;
+import edu.kis.powp.jobs2d.drivers.transformators.ScalingDecorator;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
@@ -97,34 +94,8 @@ public class TestJobs2dApp {
         driversComposite.addDriver(new LoggerDriver(true));
         DriverFeature.addDriver("BasicLine with Logger", driversComposite);
 
-        Job2dDriver scalingDriver = new ScalingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic scaled x2", 2);
-        DriverFeature.addDriver("Scaled x2 Line Simulator", scalingDriver);
-
-        Job2dDriver flippingVerticallyDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flip vertically", FlippingLineDriverAdapter.FLIP_VERTICALLY);
-        DriverFeature.addDriver("Flip vertically Simulator", flippingVerticallyDriver);
-
-        Job2dDriver flippingHorizontallyDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flip horizontally", FlippingLineDriverAdapter.FLIP_HORIZONTALLY);
-        DriverFeature.addDriver("Flip horizontally Simulator", flippingHorizontallyDriver);
-
-        Job2dDriver flippingBothSidesDriver = new FlippingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "flip both sides", FlippingLineDriverAdapter.FLIP_BOTH_SIDES);
-        DriverFeature.addDriver("Flip both sides Simulator", flippingBothSidesDriver);
-
-        Job2dDriver rotating90DegClockDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 90 deg clockwise", RotatingLineDriverAdapter.ROTATE_90_CLOCKWISE);
-        DriverFeature.addDriver("Rotate 90deg clockwise Simulator", rotating90DegClockDriver);
-
-        Job2dDriver rotating90DegCounterClockDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 90 deg counterclockwise", RotatingLineDriverAdapter.ROTATE_90_COUNTERCLOCKWISE);
-        DriverFeature.addDriver("Rotate 90deg counterclockwise Simulator", rotating90DegCounterClockDriver);
-
-        Job2dDriver rotating180DegDriver = new RotatingLineDriverAdapter(drawerController, LineFactory.getBasicLine(), "rotate 180 deg", RotatingLineDriverAdapter.ROTATE_180);
-        DriverFeature.addDriver("Rotate 180deg Simulator", rotating180DegDriver);
-
-        Job2dDriver test = new ScalingDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 0.5f);
-//        Job2dDriver test = new ScalingDecorator(new LoggerDriver(false), 0.5f);
-//        DriversComposite test = new DriversComposite();
-//        test.addDriver(new ScalingDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 0.5f));
-//        test.addDriver(new ScalingDecorator(new LoggerDriver(true), 0.5f));
-//        Job2dDriver test = new ScalingDecorator(DriverFeature.getDriverManager().getCurrentDriver(), 0.5f);
-        DriverFeature.addDriver("TEST", test);
+        Job2dDriver lineScalingAndRotation = new ScalingDecorator(new RotatingDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), RotatingDecorator.ROTATE_90_DEG_CLOCKWISE), 0.5F);
+        DriverFeature.addDriver("Line Scaling and Rotation", lineScalingAndRotation);
 
         DriverFeature.updateDriverInfo();
     }

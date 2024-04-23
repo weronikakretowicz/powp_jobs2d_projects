@@ -1,4 +1,4 @@
-package edu.kis.powp.jobs2d.drivers.transformations;
+package edu.kis.powp.jobs2d.drivers.transformators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 
