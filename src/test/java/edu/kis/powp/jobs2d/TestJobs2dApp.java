@@ -57,8 +57,9 @@ public class TestJobs2dApp {
         application.addTest("Show current command stats", new VisitorTest());
     }
 
-    private static void setupTransformationTests(Application application) {
-        application.addTest("Flip command", new CommandFlipTest());
+    private static void setupCommandTransformationVisitorTests(Application application) {
+        application.addTest("Flip command ↔ horizontally", new CommandHorizontalFlipTest());
+        application.addTest("Flip command ↕ vertically", new CommandVerticalFlipTest());
         application.addTest("Scale command (scale = 2)", new CommandScaleTest(2));
         application.addTest("Rotate command (degrees = 15)", new CommandRotateTest(15));
     }
@@ -149,7 +150,7 @@ public class TestJobs2dApp {
                 setupPresetTests(app);
                 setupCommandTests(app);
                 setupVisitorTest(app);
-                setupTransformationTests(app);
+                setupCommandTransformationVisitorTests(app);
                 setupLogger(app);
                 setupWindows(app);
                 setupMouseHandler(app);

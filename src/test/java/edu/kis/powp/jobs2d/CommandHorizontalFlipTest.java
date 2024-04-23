@@ -1,31 +1,25 @@
 package edu.kis.powp.jobs2d;
 
+import edu.kis.powp.jobs2d.transformations.HorizontalFlipTransformation;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.CommandTransformationVisitor;
 import edu.kis.powp.jobs2d.command.manager.CommandManager;
-import edu.kis.powp.jobs2d.transformations.ScaleTransformation;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.transformations.Transformation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CommandScaleTest implements ActionListener {
-
-    private final double scale;
-    public CommandScaleTest(double scale) {
-        this.scale = scale;
-    }
-
+public class CommandHorizontalFlipTest implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         CommandManager commandManager = CommandsFeature.getCommandManager();
         DriverCommand currentCommand = commandManager.getCurrentCommand();
 
-        Transformation scaleTransformation = new ScaleTransformation(this.scale);
-        CommandTransformationVisitor commandScaleVisitor = new CommandTransformationVisitor(currentCommand.toString(), scaleTransformation);
+        Transformation horizontalFlipTransformation = new HorizontalFlipTransformation();
+        CommandTransformationVisitor commandTransformationVisitor = new CommandTransformationVisitor(currentCommand.toString(), horizontalFlipTransformation);
 
-        currentCommand.accept(commandScaleVisitor);
-        commandManager.setCurrentCommand(commandScaleVisitor.getTransformedCommand());
+        currentCommand.accept(commandTransformationVisitor);
+        commandManager.setCurrentCommand(commandTransformationVisitor.getTransformedCommand());
     }
 }

@@ -1,17 +1,22 @@
 package edu.kis.powp.jobs2d.command;
 
+import edu.kis.powp.jobs2d.transformations.Transformation;
+
 import java.awt.Point;
 
-public abstract class TransformationVisitor implements CommandVisitor {
+public class CommandTransformationVisitor implements CommandVisitor {
 
     private final CompoundCommand transformedCommands;
+    private final Transformation transformation;
 
     public CompoundCommand getTransformedCommand() {
         return transformedCommands;
     }
 
-    public TransformationVisitor(String name) {
-        this.transformedCommands = new CompoundCommand(name);
+    public CommandTransformationVisitor(String commandName, Transformation transformation) {
+        String newName = commandName + "_" + transformation.getName();
+        this.transformedCommands = new CompoundCommand(newName);
+        this.transformation = transformation;
     }
 
     @Override
@@ -31,15 +36,13 @@ public abstract class TransformationVisitor implements CommandVisitor {
         compoundCommand.iterator().forEachRemaining(command -> command.accept(this));
     }
 
-    protected abstract Point transform(Point point);
-
-    protected void applyTransformation(Point point, CommandCreator commandCreator) {
-        Point transformedPoint = transform(point);
+    private void applyTransformation(Point point, CommandCreator commandCreator) {
+        Point transformedPoint = transformation.transform(point);
         add(commandCreator.create(transformedPoint.x, transformedPoint.y));
     }
 
     private void add(DriverCommand command) {
-        this.transformedCommands.addCommand(command);
+        transformedCommands.addCommand(command);
     }
 
     @Override
@@ -51,7 +54,7 @@ public abstract class TransformationVisitor implements CommandVisitor {
      * Functional interface for OperationToCommand and SetPositionCommand constructors.
      */
     @FunctionalInterface
-    protected interface CommandCreator {
+    private interface CommandCreator {
         DriverCommand create(int x, int y);
     }
 }
