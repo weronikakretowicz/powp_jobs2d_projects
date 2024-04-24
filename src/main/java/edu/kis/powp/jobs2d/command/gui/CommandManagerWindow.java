@@ -14,7 +14,6 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.CommandManager;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
-import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Subscriber;
 
@@ -113,7 +112,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     }
 
     private void runCommand(){
-        DriverCommand command = CommandsFeature.getCommandManager().getCurrentCommand();
+        DriverCommand command = commandManager.getCurrentCommand();
         command.execute(DriverFeature.getDriverManager().getCurrentDriver());
     }
 
