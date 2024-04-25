@@ -115,7 +115,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     }
 
     private void runCommand(){
-        commandManager.getCurrentCommand().execute(driverManager.getCurrentDriver());
+        commandManager.runCommand(driverManager.getCurrentDriver());
     }
 
     public void updateCurrentCommandField() {

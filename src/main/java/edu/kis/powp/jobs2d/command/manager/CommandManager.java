@@ -84,4 +84,8 @@ public class CommandManager {
     public Publisher getChangePublisher() {
         return changePublisher;
     }
+
+    public void runCommand(Job2dDriver driver) {
+        this.currentCommand.execute(driver);
+    }
 }
