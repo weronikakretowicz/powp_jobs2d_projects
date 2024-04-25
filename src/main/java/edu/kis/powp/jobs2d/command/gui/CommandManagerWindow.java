@@ -2,6 +2,7 @@ package edu.kis.powp.jobs2d.command.gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.*;
@@ -11,6 +12,8 @@ import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.line.BasicLine;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.JsonCommandImporter;
 import edu.kis.powp.jobs2d.command.manager.CommandManager;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.observer.Subscriber;
@@ -60,14 +63,23 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         commandPreviewPanel = new DefaultDrawerFrame();
         drawPanelController = new DrawPanelController();
         drawPanelController.initialize(commandPreviewPanel.getDrawArea());
-        previewLineDriver = new LineDriverAdapter(drawPanelController,new BasicLine(),"preview");
+        previewLineDriver = new LineDriverAdapter(drawPanelController, new BasicLine(), "preview");
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.gridx = 0;
         c.weighty = 5;
         JPanel drawArea = commandPreviewPanel.getDrawArea();
         drawArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        content.add(drawArea ,c);
+        content.add(drawArea, c);
+
+        JButton btnImportCommand = new JButton("Import command");
+        btnImportCommand.addActionListener((ActionEvent e) -> this.importCommand());
+
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.gridx = 0;
+        c.weighty = 1;
+        content.add(btnImportCommand, c);
 
         JButton btnClearCommand = new JButton("Clear command");
         btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
@@ -84,6 +96,25 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         c.gridx = 0;
         c.weighty = 1;
         content.add(btnClearObservers, c);
+    }
+
+    private void importCommand() {
+        JFileChooser chooser = new JFileChooser();
+        int status = chooser.showOpenDialog(null);
+        if (status == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            if (file == null) {
+                return;
+            }
+            String filePath = chooser.getSelectedFile().getAbsolutePath();
+            JsonCommandImporter importer = new JsonCommandImporter();
+
+            DriverCommand command = importer.importCommands(filePath);
+            if (command != null) {
+                commandManager.setCurrentCommand(command);
+            }
+
+        }
     }
 
     private void clearCommand() {
