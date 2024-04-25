@@ -117,8 +117,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
                 String filePath = chooser.getSelectedFile().getAbsolutePath();
                 String fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
-                ImporterFactory importerFactory = new ImporterFactory();
-                CommandImporter importer = importerFactory.getImporter(fileExtension);
+                CommandImporter importer = ImporterFactory.getImporter(fileExtension);
                 String content = new String(Files.readAllBytes(Paths.get(filePath)));
                 DriverCommand command = importer.importCommands(content);
                 commandManager.setCurrentCommand(command);
