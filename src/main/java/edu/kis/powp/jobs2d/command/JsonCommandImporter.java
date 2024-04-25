@@ -10,7 +10,7 @@ import java.util.List;
 public class JsonCommandImporter implements CommandImporter {
 
     @Override
-    public DriverCommand importCommands(String commands) throws JSONException {
+    public DriverCommand importCommands(String commands) throws JSONException, IllegalArgumentException {
 
         JSONObject jsonObject = new JSONObject(commands);
 
@@ -28,7 +28,7 @@ public class JsonCommandImporter implements CommandImporter {
 
     }
 
-    private DriverCommand createCommandFromJson(JSONObject jsonObject) throws JSONException {
+    private DriverCommand createCommandFromJson(JSONObject jsonObject) throws JSONException, IllegalArgumentException {
         String commandType = jsonObject.getString("command");
         int x = jsonObject.getInt("x");
         int y = jsonObject.getInt("y");
