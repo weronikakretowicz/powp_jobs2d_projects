@@ -5,8 +5,9 @@ import java.util.Map;
 
 public class ImporterFactory {
     private static final Map<String, CommandImporter> importers = new HashMap<>();
-    static {
-        importers.put("json", new JsonCommandImporter());
+
+    public static void addImporter(String fileExtension, CommandImporter importer) {
+        importers.put(fileExtension, importer);
     }
 
     public static CommandImporter getImporter(String fileExtension) {
