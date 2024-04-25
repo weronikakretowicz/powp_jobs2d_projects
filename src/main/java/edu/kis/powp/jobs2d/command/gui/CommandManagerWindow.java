@@ -3,7 +3,10 @@ package edu.kis.powp.jobs2d.command.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 
@@ -28,6 +31,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     private String observerListString;
     private JTextArea observerListField;
     final private Job2dDriver previewLineDriver;
+
+    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+
     /**
      *
      */
@@ -73,7 +80,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         content.add(drawArea, c);
 
         JButton btnImportCommand = new JButton("Import command");
-        btnImportCommand.addActionListener((ActionEvent e) -> this.importCommand());
+        btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandJson());
 
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
@@ -98,22 +105,24 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         content.add(btnClearObservers, c);
     }
 
-    private void importCommand() {
-        JFileChooser chooser = new JFileChooser();
-        int status = chooser.showOpenDialog(null);
-        if (status == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            if (file == null) {
-                return;
-            }
-            String filePath = chooser.getSelectedFile().getAbsolutePath();
-            JsonCommandImporter importer = new JsonCommandImporter();
-
-            DriverCommand command = importer.importCommands(filePath);
-            if (command != null) {
+    private void importCommandJson() {
+        try {
+            JFileChooser chooser = new JFileChooser();
+            int status = chooser.showOpenDialog(null);
+            if (status == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                if (file == null) {
+                    return;
+                }
+                String filePath = chooser.getSelectedFile().getAbsolutePath();
+                JsonCommandImporter importer = new JsonCommandImporter();
+                String content = new String(Files.readAllBytes(Paths.get(filePath)));
+                DriverCommand command = importer.importCommands(content);
                 commandManager.setCurrentCommand(command);
-            }
 
+            }
+        } catch (Exception e) {
+            logger.warning("Error while importing command from JSON file: " + e.getMessage());
         }
     }
 
