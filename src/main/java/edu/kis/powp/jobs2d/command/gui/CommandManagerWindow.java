@@ -15,8 +15,9 @@ import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.line.BasicLine;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.command.CommandImporter;
 import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.JsonCommandImporter;
+import edu.kis.powp.jobs2d.command.ImporterFactory;
 import edu.kis.powp.jobs2d.command.manager.CommandManager;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.observer.Subscriber;
@@ -80,7 +81,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         content.add(drawArea, c);
 
         JButton btnImportCommand = new JButton("Import command");
-        btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandJson());
+        btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandFromFile());
 
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
@@ -105,24 +106,25 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         content.add(btnClearObservers, c);
     }
 
-    private void importCommandJson() {
+    private void importCommandFromFile() {
         try {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showOpenDialog(null);
             if (status == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
-                if (file == null) {
-                    return;
-                }
+                if (file == null)
+                    throw new IllegalArgumentException("Invalid file");
+
                 String filePath = chooser.getSelectedFile().getAbsolutePath();
-                JsonCommandImporter importer = new JsonCommandImporter();
+                String fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
+                ImporterFactory importerFactory = new ImporterFactory();
+                CommandImporter importer = importerFactory.getImporter(fileExtension);
                 String content = new String(Files.readAllBytes(Paths.get(filePath)));
                 DriverCommand command = importer.importCommands(content);
                 commandManager.setCurrentCommand(command);
-
             }
         } catch (Exception e) {
-            logger.warning("Error while importing command from JSON file: " + e.getMessage());
+            logger.warning("Error while importing command from file: " + e.getMessage());
         }
     }
 
