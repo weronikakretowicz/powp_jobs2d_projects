@@ -59,6 +59,11 @@ public class TestJobs2dApp {
         application.addTest("Show current command stats", new VisitorTest());
     }
 
+    private static void setupDeepCopyVisitorTests(Application application) {
+        application.addTest("Save deep copy of loaded command", new DeepCopyVisitorSaveTest());
+        application.addTest("Load deep copy of saved command", new DeepCopyVisitorTest());
+    }
+
     private static void setupCommandTransformationVisitorTests(Application application) {
         application.addTest("Flip command ↔ horizontally", new CommandHorizontalFlipTest());
         application.addTest("Flip command ↕ vertically", new CommandVerticalFlipTest());
@@ -138,7 +143,7 @@ public class TestJobs2dApp {
     }
 
     private static void setupImporters() {
-         ImporterFactory.addImporter("json", new JsonCommandImporter());
+        ImporterFactory.addImporter("json", new JsonCommandImporter());
     }
 
     /**
@@ -156,6 +161,7 @@ public class TestJobs2dApp {
                 setupPresetTests(app);
                 setupCommandTests(app);
                 setupVisitorTest(app);
+                setupDeepCopyVisitorTests(app);
                 setupCommandTransformationVisitorTests(app);
                 setupLogger(app);
                 setupWindows(app);
