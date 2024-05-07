@@ -50,16 +50,14 @@ public class TestJobs2dApp {
         application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 
         application.addTest("Load recorded command", new SelectLoadRecordedCommandOptionListener());
+        application.addTest("Load deeply complex command", new SelectLoadDeeplyComplexCommandOptionListener());
 
         application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
     }
 
-    private static void setupVisitorTest(Application application) {
+    private static void setupVisitorTests(Application application) {
         application.addTest("Show current command stats", new VisitorTest());
-    }
-
-    private static void setupDeepCopyVisitorTests(Application application) {
         application.addTest("Save deep copy of loaded command", new DeepCopyVisitorSaveTest());
         application.addTest("Load deep copy of saved command", new DeepCopyVisitorTest());
     }
@@ -160,8 +158,7 @@ public class TestJobs2dApp {
                 setupDrivers(app);
                 setupPresetTests(app);
                 setupCommandTests(app);
-                setupVisitorTest(app);
-                setupDeepCopyVisitorTests(app);
+                setupVisitorTests(app);
                 setupCommandTransformationVisitorTests(app);
                 setupLogger(app);
                 setupWindows(app);

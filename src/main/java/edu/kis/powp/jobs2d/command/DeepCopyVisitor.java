@@ -27,11 +27,10 @@ public class DeepCopyVisitor implements CommandVisitor {
         List<DriverCommand> commands = new ArrayList<>();
         for (Iterator<DriverCommand> it = compoundCommand.iterator(); it.hasNext(); ) {
             DriverCommand command = it.next();
-            DeepCopyVisitor deepCopyVisitor = new DeepCopyVisitor();
-            command.accept(deepCopyVisitor);
-            commands.add(deepCopyVisitor.getCopiedCommand());
+            command.accept(this);
+            commands.add(this.getCopiedCommand());
         }
-        copiedCommand = new CompoundCommand(commands, "Copied compound command");
+        copiedCommand = new CompoundCommand(commands, "Copy of " + compoundCommand);
 
     }
 
