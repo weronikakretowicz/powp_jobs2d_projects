@@ -1,6 +1,8 @@
 package edu.kis.powp.jobs2d.drivers;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.features.MouseClickListener;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MouseClickConverterWithRightAndLeft implements MouseListener {
+public class MouseClickConverterWithRightAndLeft implements MouseListener, MouseClickListener {
 	private final int MOUSE_BUTTON_LEFT = 1;
 	private final int MOUSE_BUTTON_RIGHT = 3;
 	private final int TIMER_DELAY = 1; // Milliseconds
@@ -29,10 +31,15 @@ public class MouseClickConverterWithRightAndLeft implements MouseListener {
 	private boolean isFollowingCursor = false;
 	private boolean leftButtonFirstClick = true;
 
-	public MouseClickConverterWithRightAndLeft(JPanel panel) {
+	public MouseClickConverterWithRightAndLeft(JPanel panel , Job2dDriver driver) {
 		this.panel = panel;
 		this.panel.addMouseListener(this);
 		this.followCursorTimer = new Timer(TIMER_DELAY, new FollowCursorActionListener());
+		this.driver = driver;
+	}
+
+	public void removeMouseListener() {
+		this.panel.removeMouseListener(this);
 	}
 
 	public void setDriver(Job2dDriver driver) {
@@ -50,6 +57,7 @@ public class MouseClickConverterWithRightAndLeft implements MouseListener {
 		} else if (buttonPressed == MOUSE_BUTTON_RIGHT) {
 			handleRightClick(position);
 		}
+
 	}
 
 	@Override
@@ -88,14 +96,17 @@ public class MouseClickConverterWithRightAndLeft implements MouseListener {
 		if (leftButtonFirstClick) {
 			if (driver != null) {
 				driver.setPosition(position.x, position.y);
+
 			}
 			leftButtonFirstClick = false;
 		} else {
 			if (driver != null) {
+
 				driver.operateTo(position.x, position.y);
 			}
 			leftButtonFirstClick = true;
 		}
+
 	}
 
 	private void handleRightClick(Point position) {
@@ -109,6 +120,7 @@ public class MouseClickConverterWithRightAndLeft implements MouseListener {
 			followCursorTimer.stop();
 			isFollowingCursor = false;
 		}
+
 	}
 
 	private void updateDriverPosition() {
