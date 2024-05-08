@@ -3,14 +3,16 @@ package edu.kis.powp.jobs2d.drivers.transformators;
 import edu.kis.powp.jobs2d.Job2dDriver;
 
 public class RotatingDriverDecorator extends Job2dDriverDecorator {
-    public static final int ROTATE_90_DEG_CLOCKWISE = 0;
-    public static final int ROTATE_90_DEG_COUNTERCLOCKWISE = 1;
-    public static final int ROTATE_180_DEG = 2;
+    enum RotationOption {
+        ROTATE_90_DEG_CLOCKWISE,
+        ROTATE_90_DEG_COUNTERCLOCKWISE,
+        ROTATE_180_DEG
+    }
 
     private int rotatedX = 0, rotatedY = 0;
-    private int rotationOption;
+    private final RotationOption rotationOption;
 
-    public RotatingDriverDecorator(Job2dDriver job2dDriver, int rotationOption) {
+    private RotatingDriverDecorator(Job2dDriver job2dDriver, RotationOption rotationOption) {
         super(job2dDriver);
         this.rotationOption = rotationOption;
     }
@@ -49,11 +51,15 @@ public class RotatingDriverDecorator extends Job2dDriverDecorator {
         }
     }
 
-    public void setRotationOption(int rotationOption) {
-        this.rotationOption = rotationOption;
+    static public RotatingDriverDecorator getRotating90DegClockwiseDecorator(Job2dDriver job2dDriver) {
+        return new RotatingDriverDecorator(job2dDriver, RotationOption.ROTATE_90_DEG_CLOCKWISE);
     }
 
-    public int getRotationOption() {
-        return rotationOption;
+    static public RotatingDriverDecorator getRotating90DegCounterclockwiseDecorator(Job2dDriver job2dDriver) {
+        return new RotatingDriverDecorator(job2dDriver, RotationOption.ROTATE_90_DEG_COUNTERCLOCKWISE);
+    }
+
+    static public RotatingDriverDecorator getRotating180DegDecorator(Job2dDriver job2dDriver) {
+        return new RotatingDriverDecorator(job2dDriver, RotationOption.ROTATE_180_DEG);
     }
 }
