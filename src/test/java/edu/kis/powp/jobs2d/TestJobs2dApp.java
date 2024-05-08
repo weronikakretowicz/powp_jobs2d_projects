@@ -96,8 +96,8 @@ public class TestJobs2dApp {
         driversComposite.addDriver(new LoggerDriver(true));
         DriverFeature.addDriver("BasicLine with Logger", driversComposite);
 
-        Job2dDriver lineScalingAndRotation = new ScalingDecorator(new RotatingDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), RotatingDecorator.ROTATE_90_DEG_CLOCKWISE), 0.5F);
-        DriverFeature.addDriver("Line Scaling and Rotation", lineScalingAndRotation);
+        Job2dDriver lineScalingAndRotation = FlippingDriverDecorator.getFlipVerticalDecorator(new ShiftingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 50, -20));
+        DriverFeature.addDriver("Line Shifting and Flipping", lineScalingAndRotation);
 
         DriverFeature.updateDriverInfo();
     }
