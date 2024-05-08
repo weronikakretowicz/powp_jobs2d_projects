@@ -4,7 +4,7 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 
 public class ScalingDriverDecorator extends Job2dDriverDecorator {
     private int scaledX = 0, scaledY = 0;
-    private float scalingFactor;
+    private final float scalingFactor;
 
     public ScalingDriverDecorator(Job2dDriver job2dDriver, float scaleValue) {
         super(job2dDriver);
@@ -29,13 +29,5 @@ public class ScalingDriverDecorator extends Job2dDriverDecorator {
     {
         scaledX = Math.round(x * scalingFactor);
         scaledY = Math.round(y * scalingFactor);
-    }
-
-    public void setScalingFactor(float scalingFactor) {
-        this.scalingFactor = scalingFactor;
-    }
-
-    public float getScalingFactor() {
-        return scalingFactor;
     }
 }

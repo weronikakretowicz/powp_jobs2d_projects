@@ -18,15 +18,13 @@ public class RotatingDriverDecorator extends Job2dDriverDecorator {
     }
 
     @Override
-    public void setPosition(int x, int y)
-    {
+    public void setPosition(int x, int y) {
         rotate(x, y);
         super.setPosition(rotatedX, rotatedY);
     }
 
     @Override
-    public void operateTo(int x, int y)
-    {
+    public void operateTo(int x, int y) {
         rotate(x, y);
         super.operateTo(rotatedX, rotatedY);
     }
