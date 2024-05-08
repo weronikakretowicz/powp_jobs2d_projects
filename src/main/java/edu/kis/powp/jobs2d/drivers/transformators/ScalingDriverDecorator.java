@@ -27,14 +27,8 @@ public class ScalingDecorator extends TransformationsDriverDecorator {
 
     private void scale(int x, int y)
     {
-        int distanceX = x - unscaledX;
-        int distanceY = y - unscaledY;
-
-        scaledX = Math.round(scaledX + (scalingFactor * distanceX));
-        scaledY = Math.round(scaledY + (scalingFactor * distanceY));
-
-        unscaledX = x;
-        unscaledY = y;
+        scaledX = Math.round(x * scalingFactor);
+        scaledY = Math.round(y * scalingFactor);
     }
 
     public void setScalingFactor(float scalingFactor) {
