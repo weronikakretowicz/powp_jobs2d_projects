@@ -2,11 +2,11 @@ package edu.kis.powp.jobs2d.drivers.transformators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 
-public class ScalingDecorator extends TransformationsDriverDecorator {
-    private int unscaledX = 0, unscaledY = 0, scaledX = 0, scaledY = 0;
+public class ScalingDriverDecorator extends Job2dDriverDecorator {
+    private int scaledX = 0, scaledY = 0;
     private float scalingFactor;
 
-    public ScalingDecorator(Job2dDriver job2dDriver, float scaleValue) {
+    public ScalingDriverDecorator(Job2dDriver job2dDriver, float scaleValue) {
         super(job2dDriver);
         this.scalingFactor = scaleValue;
     }

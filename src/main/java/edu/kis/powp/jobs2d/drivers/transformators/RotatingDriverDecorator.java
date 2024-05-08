@@ -2,7 +2,7 @@ package edu.kis.powp.jobs2d.drivers.transformators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 
-public class RotatingDecorator extends TransformationsDriverDecorator {
+public class RotatingDriverDecorator extends Job2dDriverDecorator {
     public static final int ROTATE_90_DEG_CLOCKWISE = 0;
     public static final int ROTATE_90_DEG_COUNTERCLOCKWISE = 1;
     public static final int ROTATE_180_DEG = 2;
@@ -10,7 +10,7 @@ public class RotatingDecorator extends TransformationsDriverDecorator {
     private int rotatedX = 0, rotatedY = 0;
     private int rotationOption;
 
-    public RotatingDecorator(Job2dDriver job2dDriver, int rotationOption) {
+    public RotatingDriverDecorator(Job2dDriver job2dDriver, int rotationOption) {
         super(job2dDriver);
         this.rotationOption = rotationOption;
     }

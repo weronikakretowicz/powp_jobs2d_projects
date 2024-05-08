@@ -13,8 +13,10 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver
 import edu.kis.powp.jobs2d.drivers.*;
 import edu.kis.powp.jobs2d.drivers.LoggerDriver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
-import edu.kis.powp.jobs2d.drivers.transformators.RotatingDecorator;
-import edu.kis.powp.jobs2d.drivers.transformators.ScalingDecorator;
+import edu.kis.powp.jobs2d.drivers.transformators.FlippingDriverDecorator;
+import edu.kis.powp.jobs2d.drivers.transformators.RotatingDriverDecorator;
+import edu.kis.powp.jobs2d.drivers.transformators.ScalingDriverDecorator;
+import edu.kis.powp.jobs2d.drivers.transformators.ShiftingDriverDecorator;
 import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
