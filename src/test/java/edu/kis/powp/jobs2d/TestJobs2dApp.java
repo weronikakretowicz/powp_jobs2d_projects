@@ -96,8 +96,15 @@ public class TestJobs2dApp {
         driversComposite.addDriver(new LoggerDriver(true));
         DriverFeature.addDriver("BasicLine with Logger", driversComposite);
 
-        Job2dDriver lineScalingAndRotation = FlippingDriverDecorator.getFlipVerticalDecorator(new ShiftingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 50, -20));
-        DriverFeature.addDriver("Line Shifting and Flipping", lineScalingAndRotation);
+        Job2dDriver lineShiftAndFlip = FlippingDriverDecorator.getFlipVerticalDecorator(new ShiftingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 50, -20));
+        DriverFeature.addDriver("Line Shift and Flip", lineShiftAndFlip);
+
+        Job2dDriver lineShiftAndRotate = RotatingDriverDecorator.getRotating90DegClockwiseDecorator(new ScalingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 0.5F));
+        DriverFeature.addDriver("Line Scale and Rotate", lineShiftAndRotate);
+
+        // Decorators in that order will cause the object first to flip horizontally, then rotate 90 deg clockwise, and then scale 1.5
+        Job2dDriver lineShiftAndRotateAndFlip = FlippingDriverDecorator.getFlipHorizontalDecorator(RotatingDriverDecorator.getRotating90DegClockwiseDecorator(new ScalingDriverDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), 1.5F)));
+        DriverFeature.addDriver("Line Flip, Rotate and Scale", lineShiftAndRotateAndFlip);
 
         DriverFeature.updateDriverInfo();
     }
