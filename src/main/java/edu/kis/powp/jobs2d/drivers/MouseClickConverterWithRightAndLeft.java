@@ -1,7 +1,6 @@
 package edu.kis.powp.jobs2d.drivers;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.features.DriverFeature;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,137 +9,141 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MouseClickConverterWithRightAndLeft implements MouseListener {
-    private final int MOUSE_BUTTON_LEFT = 1;
-    private final int MOUSE_BUTTON_RIGHT = 3;
-    private final int TIMER_DELAY = 1; // Milliseconds
+	private final int MOUSE_BUTTON_LEFT = 1;
+	private final int MOUSE_BUTTON_RIGHT = 3;
+	private final int TIMER_DELAY = 1; // Milliseconds
 
-    private static class Point {
-        public int x;
-        public int y;
+	private static class Point {
+		public int x;
+		public int y;
 
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
+		public Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
 
-    private final JPanel panel;
-    private final Timer followCursorTimer;
-    private final Job2dDriver driver;
-    private boolean isFollowingCursor = false;
-    private boolean leftButtonFirstClick = true;
+	private final JPanel panel;
+	private final Timer followCursorTimer;
+	private Job2dDriver driver;
+	private boolean isFollowingCursor = false;
+	private boolean leftButtonFirstClick = true;
 
-    public MouseClickConverterWithRightAndLeft(JPanel panel, Job2dDriver driver) {
-        this.panel = panel;
-        this.panel.addMouseListener(this);
-        this.followCursorTimer = new Timer(TIMER_DELAY, new FollowCursorActionListener());
-        this.driver = driver;
-    }
+	public MouseClickConverterWithRightAndLeft(JPanel panel) {
+		this.panel = panel;
+		this.panel.addMouseListener(this);
+		this.followCursorTimer = new Timer(TIMER_DELAY, new FollowCursorActionListener());
+	}
 
+	public void setDriver(Job2dDriver driver) {
+		this.driver = driver;
+	}
 
+	@Override
+	public void mouseClicked(MouseEvent event) {
+		Point position = getClickPosition(event);
 
-    @Override
-    public void mouseClicked(MouseEvent event) {
-        Point position = getClickPosition(event);
+		int buttonPressed = event.getButton();
 
-        int buttonPressed = event.getButton();
+		if (buttonPressed == MOUSE_BUTTON_LEFT) {
+			handleLeftClick(position);
+		} else if (buttonPressed == MOUSE_BUTTON_RIGHT) {
+			handleRightClick(position);
+		}
+	}
 
-        if (buttonPressed == MOUSE_BUTTON_LEFT) {
-            handleLeftClick(position);
-        } else if (buttonPressed == MOUSE_BUTTON_RIGHT) {
-            handleRightClick(position);
-        }
-    }
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// Not used in this example
+	}
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // Not used in this example
-    }
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// Not used in this example
+	}
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // Not used in this example
-    }
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if (isFollowingCursor && !leftButtonFirstClick) {
+			followCursorTimer.start();
+		}
+	}
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        if (isFollowingCursor && !leftButtonFirstClick) {
-            followCursorTimer.start();
-        }
-    }
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// Not used in this example
+	}
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // Not used in this example
-    }
+	private Point getClickPosition(MouseEvent event) {
+		int x = event.getX();
+		int y = event.getY();
 
-    private Point getClickPosition(MouseEvent event) {
-        int x = event.getX();
-        int y = event.getY();
+		int offsetX = panel.getWidth() / 2;
+		int offsetY = panel.getHeight() / 2;
 
-        int offsetX = panel.getWidth() / 2;
-        int offsetY = panel.getHeight() / 2;
+		return new Point(x - offsetX, y - offsetY);
+	}
 
-        return new Point(x - offsetX, y - offsetY);
-    }
+	private void handleLeftClick(Point position) {
+		if (leftButtonFirstClick) {
+			if (driver != null) {
+				driver.setPosition(position.x, position.y);
+			}
+			leftButtonFirstClick = false;
+		} else {
+			if (driver != null) {
+				driver.operateTo(position.x, position.y);
+			}
+			leftButtonFirstClick = true;
+		}
+	}
 
-    private void handleLeftClick(Point position) {
-        if (leftButtonFirstClick) {
-            driver.setPosition(position.x, position.y);
-            leftButtonFirstClick = false;
-        } else {
-            driver.operateTo(position.x, position.y);
-            leftButtonFirstClick = true;
-        }
-    }
+	private void handleRightClick(Point position) {
+		if (!isFollowingCursor) {
+			if (driver != null) {
+				driver.setPosition(position.x, position.y);
+			}
+			followCursorTimer.start();
+			isFollowingCursor = true;
+		} else {
+			followCursorTimer.stop();
+			isFollowingCursor = false;
+		}
+	}
 
-    private void handleRightClick(Point position) {
-        if (!isFollowingCursor) {
-            driver.setPosition(position.x, position.y);
-            followCursorTimer.start();
-            isFollowingCursor = true;
-        } else {
-            followCursorTimer.stop();
-            isFollowingCursor = false;
-        }
-    }
+	private void updateDriverPosition() {
+		Point mousePosition = getMousePositionOnPanel();
+		if (mousePosition != null) {
+			if (!isFollowingCursor && driver != null) {
+				driver.setPosition(mousePosition.x, mousePosition.y);
+			}
+			if (driver != null) {
+				driver.operateTo(mousePosition.x, mousePosition.y);
+			}
+		} else {
+			isFollowingCursor = false;
+		}
+	}
 
-    private void updateDriverPosition() {
-        Point mousePosition = getMousePositionOnPanel();
-        if (mousePosition != null) {
-            if(!isFollowingCursor){
-                isFollowingCursor = true;
-                driver.setPosition(mousePosition.x, mousePosition.y);
-            }
-            driver.operateTo(mousePosition.x, mousePosition.y);
-        }
-        else{
-           isFollowingCursor = false;
-        }
+	private Point getMousePositionOnPanel() {
+		Point mousePosition = null;
+		java.awt.Point mousePanelPosition = panel.getMousePosition();
+		if (mousePanelPosition != null && panel.contains(mousePanelPosition)) {
+			int mouseX = mousePanelPosition.x;
+			int mouseY = mousePanelPosition.y;
 
-    }
+			int offsetX = panel.getWidth() / 2;
+			int offsetY = panel.getHeight() / 2;
 
-    private Point getMousePositionOnPanel() {
-        Point mousePosition = null;
-        java.awt.Point mousePanelPosition = panel.getMousePosition();
-        if (mousePanelPosition != null && panel.contains(mousePanelPosition)) {
-            int mouseX = mousePanelPosition.x;
-            int mouseY = mousePanelPosition.y;
+			mousePosition = new Point(mouseX - offsetX, mouseY - offsetY);
+		}
+		return mousePosition;
+	}
 
-            System.out.println(mouseX + " " + mouseY);
-
-            int offsetX = panel.getWidth() / 2;
-            int offsetY = panel.getHeight() / 2;
-
-            mousePosition = new Point(mouseX - offsetX, mouseY - offsetY);
-        }
-        return mousePosition;
-    }
-
-    private class FollowCursorActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            updateDriverPosition();
-        }
-    }
+	private class FollowCursorActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			updateDriverPosition();
+		}
+	}
 }
