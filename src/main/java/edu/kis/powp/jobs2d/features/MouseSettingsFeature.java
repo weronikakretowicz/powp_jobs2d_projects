@@ -4,6 +4,7 @@ import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.drivers.MouseClickConverter;
 import edu.kis.powp.jobs2d.drivers.MouseClickConverterWithRightAndLeft;
 import edu.kis.powp.jobs2d.enums.MouseOption;
+import edu.kis.powp.jobs2d.events.MouseClickListener;
 import edu.kis.powp.jobs2d.events.SelectMouseOptionListener;
 
 public class MouseSettingsFeature {
