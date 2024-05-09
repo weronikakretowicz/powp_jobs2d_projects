@@ -23,6 +23,7 @@ public class MouseSettingsFeature {
 
 	}
 
+    //Drawing by selecting points with left click
 	public static void setMouseClickConverterLeftOnly() {
 
 		if( mouseClickListener != null){
@@ -33,6 +34,7 @@ public class MouseSettingsFeature {
 
 	}
 
+    //Drawing by holding right click
 	public static void setMouseClickConverterLeftAndRight() {
 		if (mouseClickListener != null) {
 			((MouseClickConverter) mouseClickListener).removeMouseListener();

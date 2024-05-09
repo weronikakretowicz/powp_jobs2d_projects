@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
 public class MouseClickConverterWithRightAndLeft implements MouseListener, MouseClickListener {
 	private final int MOUSE_BUTTON_LEFT = 1;
 	private final int MOUSE_BUTTON_RIGHT = 3;
-	private final int TIMER_DELAY = 1; // Milliseconds
+    private final int TIMER_DELAY = 1; //Milliseconds
 
 	private static class Point {
 		public int x;
