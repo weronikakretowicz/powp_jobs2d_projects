@@ -2,32 +2,22 @@ package edu.kis.powp.jobs2d.drivers.transformators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 
-public class ScalingDriverDecorator extends Job2dDriverDecorator {
-    private int scaledX = 0, scaledY = 0;
+import java.awt.*;
+
+public class ScalingDriverDecorator extends Job2dDriverDecorator implements Transformation {
     private final float scalingFactor;
 
     public ScalingDriverDecorator(Job2dDriver job2dDriver, float scaleValue) {
         super(job2dDriver);
+        super.setStrategy(this);
         this.scalingFactor = scaleValue;
     }
 
     @Override
-    public void setPosition(int x, int y)
-    {
-        scale(x, y);
-        super.setPosition(scaledX, scaledY);
-    }
+    public Point transform(int x, int y) {
+        int scaledX = Math.round(x * scalingFactor);
+        int scaledY = Math.round(y * scalingFactor);
 
-    @Override
-    public void operateTo(int x, int y)
-    {
-        scale(x, y);
-        super.operateTo(scaledX, scaledY);
-    }
-
-    private void scale(int x, int y)
-    {
-        scaledX = Math.round(x * scalingFactor);
-        scaledY = Math.round(y * scalingFactor);
+        return new Point(scaledX, scaledY);
     }
 }

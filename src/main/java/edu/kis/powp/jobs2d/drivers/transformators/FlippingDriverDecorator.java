@@ -2,36 +2,27 @@ package edu.kis.powp.jobs2d.drivers.transformators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 
-public class FlippingDriverDecorator extends Job2dDriverDecorator {
+import java.awt.*;
+
+public class FlippingDriverDecorator extends Job2dDriverDecorator implements Transformation {
     enum FlippingDirection {
         FLIP_VERTICALLY,
         FLIP_HORIZONTALLY,
         FLIP_BOTH_SIDES
     }
 
-    private int flippedX = 0, flippedY = 0;
     private final FlippingDirection flippingDirection;
 
     private FlippingDriverDecorator(Job2dDriver job2dDriver, FlippingDirection flippingDirection) {
         super(job2dDriver);
+        super.setStrategy(this);
         this.flippingDirection = flippingDirection;
     }
 
     @Override
-    public void setPosition(int x, int y)
-    {
-        flip(x, y);
-        super.setPosition(flippedX, flippedY);
-    }
+    public Point transform(int x, int y) {
+        int flippedX = 0, flippedY = 0;
 
-    @Override
-    public void operateTo(int x, int y)
-    {
-        flip(x, y);
-        super.operateTo(flippedX, flippedY);
-    }
-
-    private void flip(int x, int y) {
         switch (flippingDirection) {
             case FLIP_BOTH_SIDES: {
                 flippedX = -x;
@@ -49,6 +40,8 @@ public class FlippingDriverDecorator extends Job2dDriverDecorator {
                 break;
             }
         }
+
+        return new Point(flippedX, flippedY);
     }
 
     static public FlippingDriverDecorator getFlipHorizontalDecorator(Job2dDriver job2dDriver) {

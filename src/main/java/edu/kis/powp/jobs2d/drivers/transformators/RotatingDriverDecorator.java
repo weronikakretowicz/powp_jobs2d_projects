@@ -2,34 +2,27 @@ package edu.kis.powp.jobs2d.drivers.transformators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 
-public class RotatingDriverDecorator extends Job2dDriverDecorator {
+import java.awt.*;
+
+public class RotatingDriverDecorator extends Job2dDriverDecorator implements Transformation {
     enum RotationOption {
         ROTATE_90_DEG_CLOCKWISE,
         ROTATE_90_DEG_COUNTERCLOCKWISE,
         ROTATE_180_DEG
     }
 
-    private int rotatedX = 0, rotatedY = 0;
     private final RotationOption rotationOption;
 
     private RotatingDriverDecorator(Job2dDriver job2dDriver, RotationOption rotationOption) {
         super(job2dDriver);
+        super.setStrategy(this);
         this.rotationOption = rotationOption;
     }
 
     @Override
-    public void setPosition(int x, int y) {
-        rotate(x, y);
-        super.setPosition(rotatedX, rotatedY);
-    }
+    public Point transform(int x, int y) {
+        int rotatedX = 0, rotatedY = 0;
 
-    @Override
-    public void operateTo(int x, int y) {
-        rotate(x, y);
-        super.operateTo(rotatedX, rotatedY);
-    }
-
-    private void rotate(int x, int y) {
         switch (rotationOption) {
             case ROTATE_90_DEG_CLOCKWISE: {
                 rotatedY = x;
@@ -47,6 +40,8 @@ public class RotatingDriverDecorator extends Job2dDriverDecorator {
                 break;
             }
         }
+
+        return new Point(rotatedX, rotatedY);
     }
 
     static public RotatingDriverDecorator getRotating90DegClockwiseDecorator(Job2dDriver job2dDriver) {
