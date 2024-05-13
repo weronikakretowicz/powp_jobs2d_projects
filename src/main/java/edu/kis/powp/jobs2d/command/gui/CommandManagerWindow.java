@@ -12,6 +12,7 @@ import edu.kis.legacy.drawer.shape.line.BasicLine;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.command.manager.CommandManager;
+import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.observer.Subscriber;
 
@@ -25,6 +26,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     private String observerListString;
     private JTextArea observerListField;
 
+    private DriverManager driverManager;
     final private Job2dDriver previewLineDriver;
 
 
@@ -33,7 +35,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
      */
     private static final long serialVersionUID = 9204679248304669948L;
 
-    public CommandManagerWindow(CommandManager commandManager) {
+    public CommandManagerWindow(CommandManager commandManager, DriverManager driverManager1) {
         this.setTitle("Command Manager");
         this.setSize(400, 400);
         Container content = this.getContentPane();
@@ -60,7 +62,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         c.weighty = 1;
         content.add(currentCommandField, c);
 
-        commandManager.setDriverManager(new LineDriverAdapter(drawPanelController,new BasicLine(),"preview"));
+        this.driverManager = driverManager1;
+        driverManager.setCurrentDriver(new LineDriverAdapter(drawPanelController,new BasicLine(),"preview"));
         commandPreviewPanel = new DefaultDrawerFrame();
         drawPanelController = new DrawPanelController();
         drawPanelController.initialize(commandPreviewPanel.getDrawArea());
@@ -112,7 +115,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
     }
 
     private void runCommand(){
-        commandManager.runCommand();
+        commandManager.runCommand(driverManager.getCurrentDriver());
     }
 
     public void updateCurrentCommandField() {

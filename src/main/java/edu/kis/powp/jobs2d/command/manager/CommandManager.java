@@ -7,7 +7,6 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.command.CommandVisitor;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
-import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.observer.Publisher;
 
 /**
@@ -17,12 +16,6 @@ public class CommandManager {
     private DriverCommand currentCommand = null;
 
     private Publisher changePublisher = new Publisher();
-
-    public void setDriverManager(Job2dDriver driverManager) {
-        this.driverManager = driverManager;
-    }
-
-    private Job2dDriver driverManager;
 
     /**
      * Set current command.
@@ -92,7 +85,7 @@ public class CommandManager {
         return changePublisher;
     }
 
-    public void runCommand() {
-        this.currentCommand.execute(this.driverManager);
+    public void runCommand(Job2dDriver driver) {
+        this.currentCommand.execute(driver);
     }
 }
