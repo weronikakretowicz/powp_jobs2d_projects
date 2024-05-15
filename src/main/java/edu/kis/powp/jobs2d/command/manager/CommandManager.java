@@ -12,7 +12,7 @@ import edu.kis.powp.observer.Publisher;
 /**
  * Command Manager.
  */
-public class CommandManager {
+public class CommandManager implements ICommandManager {
     private DriverCommand currentCommand = null;
 
     private Publisher changePublisher = new Publisher();
@@ -61,6 +61,11 @@ public class CommandManager {
 
     }
 
+    @Override
+    public synchronized void runCommand(Job2dDriver driver) {
+        this.currentCommand.execute(driver);
+    }
+
     /**
      * Return current command.
      *
@@ -85,7 +90,5 @@ public class CommandManager {
         return changePublisher;
     }
 
-    public void runCommand(Job2dDriver driver) {
-        this.currentCommand.execute(driver);
-    }
+
 }
