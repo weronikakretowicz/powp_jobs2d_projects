@@ -19,12 +19,13 @@ import edu.kis.powp.jobs2d.command.CommandImporter;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ImporterFactory;
 import edu.kis.powp.jobs2d.command.manager.CommandManager;
+import edu.kis.powp.jobs2d.command.manager.ICommandManager;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
-    private CommandManager commandManager;
+    private ICommandManager commandManager;
 
     private JTextArea currentCommandField;
     private DefaultDrawerFrame commandPreviewPanel;
