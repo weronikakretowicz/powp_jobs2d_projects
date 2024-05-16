@@ -51,6 +51,7 @@ public class TestJobs2dApp {
         application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 
         application.addTest("Load recorded command", new SelectLoadRecordedCommandOptionListener());
+
         application.addTest("Load deeply complex command", new SelectLoadDeeplyComplexCommandOptionListener());
 
         application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
@@ -120,7 +121,7 @@ public class TestJobs2dApp {
 
     private static void setupWindows(Application application) {
 
-        CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getCommandManager());
+        CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getCommandManager(), DriverFeature.getDriverManager());
         application.addWindowComponent("Command Manager", commandManager);
 
         CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
