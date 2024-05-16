@@ -106,7 +106,6 @@ public class TestJobs2dApp {
         driver = new RealTimeDecoratorDriver(new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special"), application.getFreePanel());
         DriverFeature.addDriver("Special line Simulator with real time drawing", driver);
 
-
         DriverFeature.updateDriverInfo();
 
         DriversComposite driversComposite = new DriversComposite();
