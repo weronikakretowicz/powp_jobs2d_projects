@@ -4,7 +4,7 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 
 import java.awt.*;
 
-public class ShiftingDriverDecorator extends Job2dDriverDecorator implements Transformation {
+public class ShiftingDriverDecorator extends TransformationJob2dDriverDecorator implements Transformation {
     private final int shiftInXDirection, shiftInYDirection;
 
     public ShiftingDriverDecorator(Job2dDriver job2dDriver, int shiftInXDirection, int shiftInYDirection) {

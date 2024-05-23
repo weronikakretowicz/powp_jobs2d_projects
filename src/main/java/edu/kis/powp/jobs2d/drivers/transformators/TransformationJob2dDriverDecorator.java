@@ -1,17 +1,19 @@
 package edu.kis.powp.jobs2d.drivers.transformators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.transformations.Transformation;
 
 import java.awt.*;
 
 
-public class Job2dDriverDecorator implements Job2dDriver{
+public class TransformationJob2dDriverDecorator implements Job2dDriver{
     private final Job2dDriver job2dDriver;
     private Transformation transformation;
 
 
-    public Job2dDriverDecorator(Job2dDriver job2dDriver) {
+    public TransformationJob2dDriverDecorator(Job2dDriver job2dDriver, Transformation transformation) {
         this.job2dDriver = job2dDriver;
+
 
     }
 

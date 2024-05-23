@@ -4,7 +4,7 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 
 import java.awt.*;
 
-public class RotatingDriverDecorator extends Job2dDriverDecorator implements Transformation {
+public class RotatingDriverDecorator extends TransformationJob2dDriverDecorator implements Transformation {
     enum RotationOption {
         ROTATE_90_DEG_CLOCKWISE,
         ROTATE_90_DEG_COUNTERCLOCKWISE,
